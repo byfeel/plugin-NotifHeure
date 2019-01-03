@@ -1,0 +1,15 @@
+{
+  "id" : "NotifHeure",
+  "name": "Notif'Heure",
+  "licence": "GPL",
+  "require": "3.0",
+  "version": "1.0",
+  "category": "devicecommunication",
+  "hasDependency": false,
+  "hasOwnDaemon": false,
+  "maxDependancyInstallTime": 0,
+  "documentation": "https://byfeel.info",
+  "changelog": "https://byfeel.info",
+  "description": "piloter son notif'heure",
+  "author": "byfeel"
+}
