@@ -6,15 +6,14 @@ http://byfeel.info
 
 # Market
 
-Retrouvez le sur le [Market](https://www.jeedom.com/market/index.php?v=d&p=market&type=plugin&&name=Plugin) Jeedom
+Retrouvez le sur le [Market](https://www.jeedom.com/market/index.php?v=d&p=market&type=plugin&&name=NotifHeure) Jeedom
 
-~~Changer **_Plugin_** par le nom du plugin dans l'adresse https du lien~~
+
 
 # Prévisualisation
 
-~~Insérer un screenshot du plugin en mode desktop~~
 
-![screenshot1](../images/ExtraTemplate_icon.png)
+![screenshot1](../images/widgetNotif.jpg)
 
 # Forum
 

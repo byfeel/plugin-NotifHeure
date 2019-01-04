@@ -1,35 +1,29 @@
 # Idées pour de futures releases
 
-~~chapitre à garder seulement pour les idées sur lesquelles aucun développement n'est prévu actuellement~~
+- Notif'Heure XL affichage sur une double matrice  
+- Notif'Heure X3 affichage sur Trois ligne ( pour trois infos différentes )
 
 # Prochaine release
 
-~~chapitre à garder seulement si une version développement est en cours~~
+- En fonction des différentes évolutions du Notif'heure  
+- Chaque nouvelle fonction , sera intégré dans le plugin
 
 # Changelog
 
-### Version 1.2.0:  (**_date_** - Version en cours sur le market)
 
-* Modification 1
 
-### Version 1.1.1:  (**_date_** ~~ex: 31 Mai 2017~~)
+### Version 1.0.0:  (**_date_**)
 
-* Modification 1
-* Modification 2
+* Mise en place du plugin
+* Widget Dashboard et Mobile
 
-### Version 1.1.0:  (**_date_**)
-
-* Modification 1
-* Modification 2
-* Modification 3
 
 ### Détail des changements
 
-Détail complet des mises à jour sur [Historique Commit](https://github.com/NextDom/plugin-ExtraTemplate/commits/master)
+Détail complet des mises à jour sur [Historique Commit](https://github.com/NextDom/plugin-NotifHeure/commits/master)
 
 # Bug
 
 En cas de problèmes avec ce plugin il est possible d'ouvrir un ticket pour demander une correction :
 
-[https://github.com/NextDom/plugin-ExtraTemplate/issues](https://github.com/NextDom/plugin-ExtraTemplate/issues)
-~~Remplacer le lien vers le bugtracker du plugin~~
+[https://github.com/NextDom/plugin-NotifHeure/issues](https://github.com/NextDom/plugin-NotifHeure/issues)
