@@ -124,7 +124,7 @@
 		refreshAm();
 	}
 
-	$('#slider#INTcmd_id#').on("change", function(e) {
+	$('.ui-slider-input').on("change", function(e) {
 		lum = $(this).val();
 		//console.log("valeur de intensité : "+lum);
 		jeedom.cmd.execute({

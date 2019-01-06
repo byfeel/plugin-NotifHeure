@@ -2,9 +2,9 @@
 
 La partie configuration du plugin permet :
 
-* config 1,
-* config 2,
-* config 3.
+* Configuration plugin
+* configuration equipement
+* lien vers page config du NotifHeure
 
 ### Configuration du plugin
 
@@ -12,11 +12,6 @@ Après téléchargement du plugin, il faut l’activer, celui-ci ne nécessite a
 
 ### Configuration des équipements
 
-description de la configuration du **plugin**, exemple d'_italique_ de **_bold Italique_** et de `code`
+Pour configurer un nouvel equipement , il suffit d'ajouter , puis de renseigner un nom d'equipement et indiquer **l'adresse IP** du norifheure .
 
-```
-bloc code
-
-```
-
-screenshot des écrans de config
+_copie ecran_  
