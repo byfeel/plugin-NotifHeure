@@ -1,7 +1,6 @@
 # FAQ
 
-### Question 1 ?
-
+### L'option photocell ne remonte pas ?  
 
 Réponse 1.
 
