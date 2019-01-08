@@ -1,6 +1,6 @@
 [![license](https://img.shields.io/github/license/NextDom/plugin-NotifHeure.svg)](./LICENSE) [![GitHub contributors](https://img.shields.io/github/contributors/NextDom/plugin-NotifHeure.svg)](../../graphs/contributors) [![GitHub release](https://img.shields.io/github/release/NextDom/plugin-NotifHeure.svg)](../../releases) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/byfeel) [![Waffle.io - Columns and their card count](https://badge.waffle.io/NextDom/plugin-NotifHeure.svg?columns=all)](https://waffle.io/NextDom/plugin-NotifHeure)
 
-### Master: [![Build Status](https://travis-ci.org/byfeel/plugin-NotifHeure.svg?branch=master)](https://travis-ci.org/byfeel/plugin-NotifHeure)  [![Coverage Status](https://coveralls.io/repos/github/byfeel/plugin-NotifHeure/badge.svg?branch=master)](https://coveralls.io/github/byfeel/plugin-NotifHeure?branch=master)
+### Master: [![Build Status](https://travis-ci.org/NextDom/plugin-NotifHeure.svg?branch=master)](https://travis-ci.org/NextDom/plugin-NotifHeure)  [![Coverage Status](https://coveralls.io/repos/github/NextDom/plugin-NotifHeure/badge.svg?branch=master)](https://coveralls.io/github/NextDom/plugin-NotifHeure?branch=master)
 
 ### Develop: [![Build Status](https://travis-ci.org/byfeel/plugin-NotifHeure.svg?branch=develop)](https://travis-ci.org/byfeel/plugin-NotifHeure)  [![Coverage Status](https://coveralls.io/repos/github/byfeel/plugin-NotifHeure/badge.svg?branch=develop)](https://coveralls.io/github/byfeel/plugin-NotifHeure?branch=develop)
 
