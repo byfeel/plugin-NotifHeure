@@ -8,8 +8,8 @@
   "hasDependency": false,
   "hasOwnDaemon": false,
   "maxDependancyInstallTime": 0,
-  "documentation": "https://nextdom.github.io/plugin-NotiFHeure/fr_FR/",
-  "changelog": "https://nextdom.github.io/plugin-NotiFHeure/fr_FR/#tocAnchor-1-9",
+  "documentation": "https://nextdom.github.io/plugin-NotifHeure/fr_FR/",
+  "changelog": "https://nextdom.github.io/plugin-NotifHeure/fr_FR/#tocAnchor-1-9",
   "description": "piloter son notif'heure",
   "author": "byfeel"
 }
