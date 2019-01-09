@@ -2,7 +2,7 @@
 
 ### Master: [![Build Status](https://travis-ci.org/NextDom/plugin-NotifHeure.svg?branch=master)](https://travis-ci.org/NextDom/plugin-NotifHeure)  [![Coverage Status](https://coveralls.io/repos/github/NextDom/plugin-NotifHeure/badge.svg?branch=master)](https://coveralls.io/github/NextDom/plugin-NotifHeure?branch=master)
 
-### Develop: [![Build Status](https://travis-ci.org/byfeel/plugin-NotifHeure.svg?branch=develop)](https://travis-ci.org/byfeel/plugin-NotifHeure)  [![Coverage Status](https://coveralls.io/repos/github/byfeel/plugin-NotifHeure/badge.svg?branch=develop)](https://coveralls.io/github/byfeel/plugin-NotifHeure?branch=develop)
+### Develop: [![Build Status](https://travis-ci.org/NextDom/plugin-NotifHeure.svg?branch=develop)](https://travis-ci.org/NextDom/plugin-NotifHeure)  [![Coverage Status](https://coveralls.io/repos/github/NextDom/plugin-NotifHeure/badge.svg?branch=develop)](https://coveralls.io/github/NextDom/plugin-NotifHeure?branch=develop)
 
 # Présentation:
 
