@@ -51,6 +51,20 @@ class NotifHeure extends eqLogic
       }
     }
 
+    public static $_widgetPossibility = array ('custom' => array(
+
+       'visibility' => true,
+       'displayName' => array('dashboard'=>true/false,'plan'=>true/false,'view'=>true,'mobile'=>true/false),
+       //'displayName'=>true,
+       'displayObjectName' => true/false,
+       'optionalParameters' => true/false,
+       'background-color'=>true/false,
+       'text-color'=>true/false,
+       'border-radius' => true/false,
+       'border'=>true/false,
+
+   ));
+
 
 
     /**************** Methods ****************/
@@ -345,99 +359,6 @@ class NotifHeure extends eqLogic
     }
 
 
-    public function sendNotif($_options = array()) {
-      //log::add('NotifHeure', 'debug', 'Message : ' . $_options['message']);
-      log::add('NotifHeure', 'info', 'From '.$this->getName()." le ".date('d/m H:i')." : Message : ".$_options['message']);
-
-      // options title
-      $Options=preg_split("/[\,\;\.\:\-]/", str_replace(' ', '', $_options['title']));
-	           foreach ( $Options as $Value ){
-            list($k, $v) = explode("=",$Value);
-            $k = strtolower($k);
-            $v = strtoupper($v);
-            $result[ $k ] = $v;
-          }
-          // Affectation des differents index
-	         $type=$result["type"];
-	         $lum=$result["lum"];
-           $flash=$result["flash"];
-           $txt=$result["txt"];
-           // si info txt absente , on récupére info notif page config
-           if (empty($txt)) $txt=$this->getConfiguration('txteffect');
-           // test si tag important
-           if (array_key_exists("important",$result)) $imp="&important=";
-           else $imp="";
-           // fx , pour type info et fix
-           if ( $type == "INFO") {
-               $pause=$result["pause"];
-      	       $fi=$result["fi"];
-    	         $fo=$result["fo"];
-    	         $fio=$result["fio"];
-      	          if (!is_numeric($fi)) $fi=8;
-    	            if (!is_numeric($fo)) $fo=1;
-      	          if (is_numeric($fio)) {
-          	         $fi=$fio;
-      		           $fo=$fio;
-                   }
-      	if (!is_numeric($pause)) $pause=3;
-      	$argtype="&type=".$type."&pause=".$pause."&fi=".$fi."&fo=".$fo;
-        } else {
-        $argtype="&type=".$type;
-      }
-      $url = 'http://' . $this->getConfiguration('IPnotif').'/Notification?msg=' .urlencode($_options['message']).$argtype."&intnotif=".$lum."&flash=".$flash."&txt=".$txt.$imp;
-      // envoie requete
-      $request_http = new com_http($url);
-      $request_http->exec(30);
-      log::add('NotifHeure', 'debug', 'URL : ' . $url);
-    }
-
-    public function sendOpt($opt,$val) {
-      log::add('NotifHeure', 'debug', 'fonction options : comm ='.$opt.' valeur = '.$val);
-
-			$url = 'http://'.$this->getConfiguration('IPnotif').'/Options';
-			$data = array($opt => $val);
-			$options = array(
-  					'http' => array(
-    				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-    				'method'  => 'POST',
-    				'content' => http_build_query($data),
-  				),
-			);
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-      // ajuste l'etat option
-      $this->checkAndUpdateCmd($opt,$val);
-      if ($opt =="INT" ) $this->checkAndUpdateCmd("LUM",FALSE);
-      //log::add('NotifHeure', 'debug', $test);
-    }
-
-    public function getInfo() {
-      $url = 'http://' . $this->getConfiguration('IPnotif').'/getInfo';
-      $jsonotif=file_get_contents($url);
-      if(!$jsonotif) throw new Exception(__('L\'adresse '.$this->getConfiguration('IPnotif').' ne semble pas joignable - Merci de verifier cette adresse.', __FILE__));
-      $info= json_decode($jsonotif, TRUE);
-      return $info;
-    }
-
-    public function upConfig() {
-      $info=self::getInfo();
-      if ($info['dht']['Status']=='OK') $this->setConfiguration('isDht',"Oui");
-      else $this->setConfiguration('isDht','Non');
-      if ($info['system']['Photocell']) $this->setConfiguration('isphotocell','Oui');
-      else $this->setConfiguration('isphotocell','Non');
-     $this->setConfiguration('nom',$info['system']['lieu']);
-     $this->setConfiguration('ip',$info['system']['IP']);
-      $this->setConfiguration('version',$info['system']['version']);
-      $this->setConfiguration('signal',$info['system']['RSSI']." dBm");
-      $this->setConfiguration('mac',$info['system']['MAC']);
-      $this->setConfiguration('hostname',$info['system']['hostname']);
-      $this->setConfiguration('display',$info['system']['display']);
-      if ($info['system']['multizone']) $this->setConfiguration('multizone','Oui');
-      else $this->setConfiguration('multizone','Non');
-      if ($info['system']['LED']) $this->setConfiguration('isLed','Oui');
-      else $this->setConfiguration('isLed','Non');
-
-    }
 
     public function toSocket() {
       $IP=$this->getConfiguration('IPnotif');
@@ -529,12 +450,102 @@ return $this->postToHtml($_version, template_replace($replace, getTemplate('core
 
         }
 
-
-
-
-
-
     /********** Getters and setters **********/
+    public function sendNotif($_options = array()) {
+      //log::add('NotifHeure', 'debug', 'Message : ' . $_options['message']);
+      log::add('NotifHeure', 'info', 'From '.$this->getName()." le ".date('d/m H:i')." : Message : ".$_options['message']);
+
+      // options title
+      $Options=preg_split("/[\,\;\.\:\-]/", str_replace(' ', '', $_options['title']));
+             foreach ( $Options as $Value ){
+            list($k, $v) = explode("=",$Value);
+            $k = strtolower($k);
+            $v = strtoupper($v);
+            $result[ $k ] = $v;
+          }
+          // Affectation des differents index
+           $type=$result["type"];
+           $lum=$result["lum"];
+           $flash=$result["flash"];
+           $txt=$result["txt"];
+           // si info txt absente , on récupére info notif page config
+           if (empty($txt)) $txt=$this->getConfiguration('txteffect');
+           // test si tag important
+           if (array_key_exists("important",$result)) $imp="&important=";
+           else $imp="";
+           // fx , pour type info et fix
+           if ( $type == "INFO") {
+               $pause=$result["pause"];
+               $fi=$result["fi"];
+               $fo=$result["fo"];
+               $fio=$result["fio"];
+                  if (!is_numeric($fi)) $fi=8;
+                  if (!is_numeric($fo)) $fo=1;
+                  if (is_numeric($fio)) {
+                     $fi=$fio;
+                     $fo=$fio;
+                   }
+        if (!is_numeric($pause)) $pause=3;
+        $argtype="&type=".$type."&pause=".$pause."&fi=".$fi."&fo=".$fo;
+        } else {
+        $argtype="&type=".$type;
+      }
+      $url = 'http://' . $this->getConfiguration('IPnotif').'/Notification?msg=' .urlencode($_options['message']).$argtype."&intnotif=".$lum."&flash=".$flash."&txt=".$txt.$imp;
+      // envoie requete
+      $request_http = new com_http($url);
+      $request_http->exec(30);
+      log::add('NotifHeure', 'debug', 'URL : ' . $url);
+    }
+
+    public function sendOpt($opt,$val) {
+      log::add('NotifHeure', 'debug', 'fonction options : comm ='.$opt.' valeur = '.$val);
+
+      $url = 'http://'.$this->getConfiguration('IPnotif').'/Options';
+      $data = array($opt => $val);
+      $options = array(
+            'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data),
+          ),
+      );
+      $context  = stream_context_create($options);
+      $result = file_get_contents($url, false, $context);
+      // ajuste l'etat option
+      $this->checkAndUpdateCmd($opt,$val);
+      if ($opt =="INT" ) $this->checkAndUpdateCmd("LUM",FALSE);
+      //log::add('NotifHeure', 'debug', $test);
+    }
+
+    public function getInfo() {
+      $url = 'http://' . $this->getConfiguration('IPnotif').'/getInfo';
+      $jsonotif=file_get_contents($url);
+      if(!$jsonotif) throw new Exception(__('L\'adresse '.$this->getConfiguration('IPnotif').' ne semble pas joignable - Merci de verifier cette adresse.', __FILE__));
+      $info= json_decode($jsonotif, TRUE);
+      return $info;
+    }
+
+    public function upConfig() {
+      $info=self::getInfo();
+      if ($info['dht']['Status']=='OK') $this->setConfiguration('isDht',"Oui");
+      else $this->setConfiguration('isDht','Non');
+      if ($info['system']['Photocell']) $this->setConfiguration('isphotocell','Oui');
+      else $this->setConfiguration('isphotocell','Non');
+     $this->setConfiguration('nom',$info['system']['lieu']);
+     $this->setConfiguration('ip',$info['system']['IP']);
+      $this->setConfiguration('version',$info['system']['version']);
+      $this->setConfiguration('signal',$info['system']['RSSI']." dBm");
+      $this->setConfiguration('mac',$info['system']['MAC']);
+      $this->setConfiguration('hostname',$info['system']['hostname']);
+      $this->setConfiguration('display',$info['system']['display']);
+      if ($info['system']['multizone']) $this->setConfiguration('multizone','Oui');
+      else $this->setConfiguration('multizone','Non');
+      if ($info['system']['LED']) $this->setConfiguration('isLed','Oui');
+      else $this->setConfiguration('isLed','Non');
+
+    }
+
+
 
 }
 
