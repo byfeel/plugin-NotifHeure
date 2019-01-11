@@ -1,15 +1,15 @@
 {
   "id" : "NotifHeure",
-  "name": "Notif'Heure",
+  "name": "NotifHeure",
   "licence": "GPL",
   "require": "3.0",
-  "version": "0.9",
+  "version": "1.0.0",
   "category": "devicecommunication",
   "hasDependency": false,
   "hasOwnDaemon": false,
   "maxDependancyInstallTime": 0,
-  "documentation": "https://nextdom.github.io/plugin-NotiFHeure/fr_FR/",
-  "changelog": "https://nextdom.github.io/plugin-NotiFHeure/fr_FR/#tocAnchor-1-9",
-  "description": "piloter son notif'heure",
+  "documentation": "https://nextdom.github.io/plugin-NotifHeure/fr_FR/",
+  "changelog": "https://nextdom.github.io/plugin-NotifHeure/fr_FR/#tocAnchor-1-9",
+  "description": "Plugin pour piloter son notif'heure",
   "author": "byfeel"
 }
