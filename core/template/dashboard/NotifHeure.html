@@ -9,7 +9,7 @@
 		<div class="text-center font-weight-bold" style="background-color:black;color:red;margin:0 40px;border:1px solid white;">
 			<span id="statusLed#id#" class="far fa-lightbulb" style="float:right;padding:5px 3px 0px 0px;color:#444444;font-size:10px;font-weight:bold;"> </span>
 			<span id="statusNotif#id#" style="font-size:25px;">#statusNotif#</span><br />
-			<span id="statusAuto#id#" style="font-size:8px;color:#aaaaaa;margin-right:20px;">#LUM#</span><span id="statusInt" style="font-size:10px;color:#ffffff;">#INT#</span>
+			<span id="statusAuto#id#" style="font-size:8px;color:#aaaaaa;margin-right:20px;">#LUM#</span><span id="statusInt#id#" style="font-size:10px;color:#ffffff;">#INT#</span>
 		</div>
 		<div class="text-left" style="margin:5px 15px;">Intensité ( Manuel )
 			<input type="range" value="#INT#" max="15" min="0" step="1" id="slider#INTcmd_id#" data-type="action" data-subtype="slider" title="Réglase intensité( Manuel )">
@@ -54,7 +54,7 @@
     <button type="button" class="btn  cmd  " data-cmd_id="#secOff_id#" title="Masquer Secondes" onclick="actBtn('#secOff_id#','#SEC_id#',0);" style="background-color:#cmd-background-color#" ><span class="fas fa-minus-square"  style="color:black;font-size:1.5em;"></span></button>
   </div>
   <div class="btn-group" role="group" aria-label="Auto">
-    <button type="button" class="btn  cmd " data-cmd_id="#lumOn_id#" title="Mode Auto" onClick="autoMode();" style="background-color:#cmd-background-color#" ><span class="fas fa-magic"  style="font-size:1.5em;"></span></button>
+    <button type="button" class="btn  cmd " data-cmd_id="#lumOn_id#" title="Mode Auto" onClick="autoMode('#statusAuto#id#');" style="background-color:#cmd-background-color#" ><span class="fas fa-magic"  style="font-size:1.5em;"></span></button>
 	</div>
 </div>
 <center>
@@ -94,9 +94,9 @@
 				});
 			});
 
-			function refreshAm() {
-				if (am#id# == "1") $('#statusAuto#id#').text("Mode Automatique");
-				else $('#statusAuto#id#').text("Mode Manuel");
+			function refreshAm(am,idstatus) {
+				if (am == "1") $(idstatus).text("Mode Automatique");
+				else $(idstatus).text("Mode Manuel");
 			}
 
 			function adjSn() {
@@ -115,12 +115,12 @@
 				adjSn();
 			}
 
-			function autoMode() {
+			function autoMode(idstatus) {
 				jeedom.cmd.execute({
 					id: '#lumOn_id#'
 				});
-				am#id# = "1";
-				refreshAm();
+				//am = "1";
+				refreshAm('1',idstatus);
 			}
 
 			$('#slider#INTcmd_id#').on("change", function(e) {
@@ -134,7 +134,7 @@
 				});
 				$('#statusInt#id#').text(lum);
 				am#id# = "0";
-				refreshAm();
+				refreshAm(am#id#,'#statusAuto#id#');
 			})
 
 
@@ -144,9 +144,9 @@
 				});
 			});
 
-			function timeNotif()
+			function timeNotif(idstatut,sn,flash)
 				{
-				if (sn#id#=="0") horNotif="OFF";
+				if (sn=="0") horNotif="OFF";
 				else {
 					horloge = new Date();
 					heure = horloge.getHours();
@@ -158,16 +158,16 @@
 					else min0 = "";
 					if (heure < 10) heure0 = "0";
 					else heure0 = "";
-					if (sn#id#=="1") horNotif = heure0 + heure + ":" + min0 + min + ":" + sec0 + sec;
+					if (sn=="1") horNotif = heure0 + heure + ":" + min0 + min + ":" + sec0 + sec;
 					else {
-						if (flash#id#) horNotif = heure0 + heure + ":" + min0 + min ;
+						if (flash) horNotif = heure0 + heure + ":" + min0 + min ;
 						else horNotif= heure0 + heure + " " + min0 + min ;
-						flash#id#=!flash#id#;
+						flash=!flash;
 					}
 				}
 				//console.log(horNotif);
-				$('#statusNotif#id#').text(horNotif);
-
+				$(idstatut).text(horNotif);
+                return flash;
 				}
 // déclenchement fonction lors du démarrage
 
@@ -175,11 +175,11 @@
 
 $(function() {
 		//console.log( "ready!" );
-		timeNotif();
-		refreshAm();
+		flash#id#=timeNotif('#statusNotif#id#',sn#id#,flash#id#);
+		refreshAm(am#id#,'#statusAuto#id#');
 		$("head").append('<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">');
 		setInterval(function(){
-			timeNotif() // toutes les secondes
+			flash#id#=timeNotif('#statusNotif#id#',sn#id#,flash#id#); // toutes les secondes
 		}, 1000);
 });
 
