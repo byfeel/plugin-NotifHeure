@@ -7,9 +7,9 @@
 			<a href="#eqLink#" style="font-size:1.1em; #hideEqLogicName#">#name_display#<span style="font-size:0.75em; position:relative; top:-2px;">#object_name#</span></a>
 		</center>
 		<div class="text-center font-weight-bold" style="background-color:black;color:red;margin:0 40px;border:1px solid white;">
-			<span id="statusLed" class="far fa-lightbulb" style="float:right;padding:5px 3px 0px 0px;color:#444444;font-size:10px;font-weight:bold;"> </span>
-			<span id="statusNotif" style="font-size:25px;">#statusNotif#</span><br />
-			<span id="statusAuto" style="font-size:8px;color:#aaaaaa;margin-right:20px;">#LUM#</span><span id="statusInt" style="font-size:10px;color:#ffffff;">#INT#</span>
+			<span id="statusLed#id#" class="far fa-lightbulb" style="float:right;padding:5px 3px 0px 0px;color:#444444;font-size:10px;font-weight:bold;"> </span>
+			<span id="statusNotif#id#" style="font-size:25px;">#statusNotif#</span><br />
+			<span id="statusAuto#id#" style="font-size:8px;color:#aaaaaa;margin-right:20px;">#LUM#</span><span id="statusInt" style="font-size:10px;color:#ffffff;">#INT#</span>
 		</div>
 		<div class="text-left" style="margin:5px 15px;">Intensité ( Manuel )
 			<input type="range" value="#INT#" max="15" min="0" step="1" id="slider#INTcmd_id#" data-type="action" data-subtype="slider" title="Réglase intensité( Manuel )">
@@ -29,7 +29,7 @@
 		<div class="cmd noRefresh" id="#HOR_id#" data-type="info" data-subtype="binary" data-cmd_id="#HOR_id#">#HOR#</div>
 		<div class="cmd noRefresh" id="#SEC_id#" data-type="info" data-subtype="binary" data-cmd_id="#SEC_id#">#SEC#</div>
 		<div class="cmd noRefresh" id="#LED_id#" data-type="info" data-subtype="binary" data-cmd_id="#LED_id#"></div>
-		<div id="infodht">
+		<div id="infodht#id#">
 		<hr class="my-1" />
 		<p class="text-center" >Info DHT</p>
 		<div style="font-size:1.5em;">
@@ -59,29 +59,29 @@
 </div>
 <center>
 	<div class="btn-group " role="group" aria-label="Auto" style="margin-top:4px;">
-	<button id="btnLedOn" type="button" class="btn cmd " data-cmd_id="#ledOn_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOn_id#'});$('#statusLed').css('color', 'yellow');" style="background-color:#cmd-background-color#" ><span class="far fa-lightbulb"  style="font-size:1.5em;"></span></button>
-	<button id="btnLedOff" type="button" class="btn cmd " data-cmd_id="#ledOff_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOff_id#'});$('#statusLed').css('color', '#444444');" style="background-color:#cmd-background-color#" ><span class="fas fa-lightbulb"  style="color:black; font-size:1.5em;"></span></button>
+	<button id="btnLedOn#id#" type="button" class="btn cmd " data-cmd_id="#ledOn_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOn_id#'});$('#statusLed').css('color', 'yellow');" style="background-color:#cmd-background-color#" ><span class="far fa-lightbulb"  style="font-size:1.5em;"></span></button>
+	<button id="btnLedOff#id#" type="button" class="btn cmd " data-cmd_id="#ledOff_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOff_id#'});$('#statusLed').css('color', '#444444');" style="background-color:#cmd-background-color#" ><span class="fas fa-lightbulb"  style="color:black; font-size:1.5em;"></span></button>
 </div>
 </center>
 		<script>
-			sn = $('#statusNotif').text();
-			am = $('#statusAuto').text();
-			flash=true;
+			sn#id# = $('#statusNotif#id#').text();
+			am#id# = $('#statusAuto#id#').text();
+			flash#id# =true;
 			$("##HOR_id#").hide();
 			$("##SEC_id#").hide();
 			if ( '#LED#' !='no')  {
 					$("##LED_id#").hide();
 					if ('#LED#' == 1) {
-						document.getElementById('statusLed').style.color = 'yellow';
+						document.getElementById('statusLed#id#').style.color = 'yellow';
 					}
-					else document.getElementById('statusLed').style.color = '#444444';
+					else document.getElementById('statusLed#id#').style.color = '#444444';
 				}
 				else {
-					$("#btnLedOn").hide();
-					$("#btnLedOff").hide();
+					$("#btnLedOn#id#").hide();
+					$("#btnLedOff#id#").hide();
 				}
 			if ('#temp_text#'==" --- ") {
-				$("#infodht").hide();
+				$("#infodht#id#").hide();
 			}
 
 			$('#btn#notif_id#').on('click', function() {
@@ -95,14 +95,14 @@
 			});
 
 			function refreshAm() {
-				if (am == "1") $('#statusAuto').text("Mode Automatique");
-				else $('#statusAuto').text("Mode Manuel");
+				if (am#id# == "1") $('#statusAuto#id#').text("Mode Automatique");
+				else $('#statusAuto#id#').text("Mode Manuel");
 			}
 
 			function adjSn() {
-				sn = 1;
-				if ($('##SEC_id#').html() == "0") sn = 2;
-				if ($('##HOR_id#').html() == "0") sn = 0;
+				sn#id# = 1;
+				if ($('##SEC_id#').html() == "0") sn#id# = 2;
+				if ($('##HOR_id#').html() == "0") sn#id# = 0;
 			//	refreshSn();
 			}
 
@@ -119,7 +119,7 @@
 				jeedom.cmd.execute({
 					id: '#lumOn_id#'
 				});
-				am = "1";
+				am#id# = "1";
 				refreshAm();
 			}
 
@@ -132,8 +132,8 @@
 						'slider': lum
 					}
 				});
-				$('#statusInt').text(lum);
-				am = "0";
+				$('#statusInt#id#').text(lum);
+				am#id# = "0";
 				refreshAm();
 			})
 
@@ -146,7 +146,7 @@
 
 			function timeNotif()
 				{
-				if (sn=="0") horNotif="OFF";
+				if (sn#id#=="0") horNotif="OFF";
 				else {
 					horloge = new Date();
 					heure = horloge.getHours();
@@ -158,15 +158,15 @@
 					else min0 = "";
 					if (heure < 10) heure0 = "0";
 					else heure0 = "";
-					if (sn=="1") horNotif = heure0 + heure + ":" + min0 + min + ":" + sec0 + sec;
+					if (sn#id#=="1") horNotif = heure0 + heure + ":" + min0 + min + ":" + sec0 + sec;
 					else {
-						if (flash) horNotif = heure0 + heure + ":" + min0 + min ;
-						else horNotif = heure0 + heure + " " + min0 + min ;
-						flash=!flash;
+						if (flash#id#) horNotif = heure0 + heure + ":" + min0 + min ;
+						else horNotif= heure0 + heure + " " + min0 + min ;
+						flash#id#=!flash#id#;
 					}
 				}
 				//console.log(horNotif);
-				$('#statusNotif').text(horNotif);
+				$('#statusNotif#id#').text(horNotif);
 
 				}
 // déclenchement fonction lors du démarrage
