@@ -11,7 +11,7 @@
 			<span id="statusNotif#id#" style="font-size:25px;">#statusNotif#</span><br />
 			<span id="statusAuto#id#" style="font-size:8px;color:#aaaaaa;margin-right:20px;">#LUM#</span><span id="statusInt#id#" style="font-size:10px;color:#ffffff;">#INT#</span>
 		</div>
-		<div class="text-left" style="margin:5px 15px;">Intensité ( Manuel )
+		<div class="text-left" style="margin:5px 15px;">Ajuster luminosité
 			<input type="range" value="#INT#" max="15" min="0" step="1" id="slider#INTcmd_id#" data-type="action" data-subtype="slider" title="Réglase intensité( Manuel )">
 		</div>
 		<div>
@@ -46,21 +46,21 @@
 		</div>
 		<div class="btn-toolbar" role="toolbar horloge" >
   	<div class="btn-group mr-2" role="group" aria-label="Afficher / masquer horloge">
-    <button type="button" class="btn cmd" data-cmd_id="#horOff_id#" title="Horloge Off" onclick="actBtn('#horOff_id#','#HOR_id#',0);" style="background-color:#cmd-background-color#" ><span class="fa fa-power-off "  style="color:black;font-size:1.5em;"></span></button>
-    <button type="button" class="btn cmd" data-cmd_id="#horOn_id#" title="Horloge On" onclick="actBtn('#horOn_id#','#HOR_id#',1);" style="background-color:#cmd-background-color#" ><span class="fa fa-clock-o"  style="font-size:1.5em;"></span></button>
+    <button type="button" class="btn cmd" data-cmd_id="#horOff_id#" title="Horloge Off" onclick="actBtn('#horOff_id#','#HOR_id#',0);	adjSn#id#();" style="background-color:#cmd-background-color#" ><span class="fa fa-power-off "  style="color:black;font-size:1.5em;"></span></button>
+    <button type="button" class="btn cmd" data-cmd_id="#horOn_id#" title="Horloge On" onclick="actBtn('#horOn_id#','#HOR_id#',1);	adjSn#id#();" style="background-color:#cmd-background-color#" ><span class="fa fa-clock-o"  style="font-size:1.5em;"></span></button>
   </div>
   <div class="btn-group mr-2" role="group" aria-label="Affichage secondes">
-    <button type="button" class="btn  cmd " data-cmd_id="#secOn_id#" title="Afficher Secondes" onclick="actBtn('#secOn_id#','#SEC_id#',1);" style="background-color:#cmd-background-color#" ><span class="fas fa-plus-square"  style="font-size:1.5em;"></span></button>
-    <button type="button" class="btn  cmd  " data-cmd_id="#secOff_id#" title="Masquer Secondes" onclick="actBtn('#secOff_id#','#SEC_id#',0);" style="background-color:#cmd-background-color#" ><span class="fas fa-minus-square"  style="color:black;font-size:1.5em;"></span></button>
+    <button type="button" class="btn  cmd " data-cmd_id="#secOn_id#" title="Afficher Secondes" onclick="actBtn('#secOn_id#','#SEC_id#',1);	adjSn#id#();" style="background-color:#cmd-background-color#" ><span class="fas fa-plus-square"  style="font-size:1.5em;"></span></button>
+    <button type="button" class="btn  cmd  " data-cmd_id="#secOff_id#" title="Masquer Secondes" onclick="actBtn('#secOff_id#','#SEC_id#',0);	adjSn#id#();" style="background-color:#cmd-background-color#" ><span class="fas fa-minus-square"  style="color:black;font-size:1.5em;"></span></button>
   </div>
   <div class="btn-group" role="group" aria-label="Auto">
-    <button type="button" class="btn  cmd " data-cmd_id="#lumOn_id#" title="Mode Auto" onClick="autoMode('#statusAuto#id#');" style="background-color:#cmd-background-color#" ><span class="fas fa-magic"  style="font-size:1.5em;"></span></button>
+    <button type="button" class="btn  cmd " data-cmd_id="#lumOn_id#" title="Mode Auto" onClick="autoMode('#statusAuto#id#','#lumOn_id#');" style="background-color:#cmd-background-color#" ><span class="fas fa-adjust"  style="font-size:1.5em;"></span></button>
 	</div>
 </div>
 <center>
 	<div class="btn-group " role="group" aria-label="Auto" style="margin-top:4px;">
-	<button id="btnLedOn#id#" type="button" class="btn cmd " data-cmd_id="#ledOn_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOn_id#'});$('#statusLed').css('color', 'yellow');" style="background-color:#cmd-background-color#" ><span class="far fa-lightbulb"  style="font-size:1.5em;"></span></button>
-	<button id="btnLedOff#id#" type="button" class="btn cmd " data-cmd_id="#ledOff_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOff_id#'});$('#statusLed').css('color', '#444444');" style="background-color:#cmd-background-color#" ><span class="fas fa-lightbulb"  style="color:black; font-size:1.5em;"></span></button>
+	<button id="btnLedOn#id#" type="button" class="btn cmd " data-cmd_id="#ledOn_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOn_id#'});$('#statusLed#id#').css('color', 'yellow');" style="background-color:#cmd-background-color#" ><span class="far fa-lightbulb"  style="font-size:1.5em;"></span></button>
+	<button id="btnLedOff#id#" type="button" class="btn cmd " data-cmd_id="#ledOff_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOff_id#'});$('#statusLed#id#').css('color', '#444444');" style="background-color:#cmd-background-color#" ><span class="fas fa-lightbulb"  style="color:black; font-size:1.5em;"></span></button>
 </div>
 </center>
 		<script>
@@ -72,9 +72,11 @@
 			if ( '#LED#' !='no')  {
 					$("##LED_id#").hide();
 					if ('#LED#' == 1) {
-						document.getElementById('statusLed#id#').style.color = 'yellow';
+					//	document.getElementById('statusLed#id#').style.color = 'yellow';
+						$('#statusLed#id#').css('color', 'yellow');
 					}
-					else document.getElementById('statusLed#id#').style.color = '#444444';
+				//	else document.getElementById('statusLed#id#').style.color = '#444444';
+				else $('#statusLed#id#').css('color', '#444444');
 				}
 				else {
 					$("#btnLedOn#id#").hide();
@@ -99,7 +101,7 @@
 				else $(idstatus).text("Mode Manuel");
 			}
 
-			function adjSn() {
+			function adjSn#id#() {
 				sn#id# = 1;
 				if ($('##SEC_id#').html() == "0") sn#id# = 2;
 				if ($('##HOR_id#').html() == "0") sn#id# = 0;
@@ -112,12 +114,12 @@
 					id: idBtn
 				});
 				$("#" + idState).html(val);
-				adjSn();
+
 			}
 
-			function autoMode(idstatus) {
+			function autoMode(idstatus,idLum) {
 				jeedom.cmd.execute({
-					id: '#lumOn_id#'
+					id: idLum
 				});
 				//am = "1";
 				refreshAm('1',idstatus);
@@ -177,7 +179,7 @@ $(function() {
 		//console.log( "ready!" );
 		flash#id#=timeNotif('#statusNotif#id#',sn#id#,flash#id#);
 		refreshAm(am#id#,'#statusAuto#id#');
-		$("head").append('<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">');
+		$("head").prepend('<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">');
 		setInterval(function(){
 			flash#id#=timeNotif('#statusNotif#id#',sn#id#,flash#id#); // toutes les secondes
 		}, 1000);
