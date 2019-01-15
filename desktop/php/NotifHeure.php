@@ -185,7 +185,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     <div class="col-sm-8">
                                         <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="WidgetTemplate">
                                             <option value="">Widget par Défaut</option>
-                                            <option value="NotifHeure">Widget spécifique</option>
+                                            <option value="NotifHeure">Widget NotifHeure</option>
                                         </select>
                                     </div>
                                 </div>
