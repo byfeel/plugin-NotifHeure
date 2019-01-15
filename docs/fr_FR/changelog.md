@@ -1,7 +1,7 @@
 # Idées pour de futures releases
 
-- Notif'Heure XL affichage sur une double matrice  
-- Notif'Heure X3 affichage sur Trois ligne ( pour trois infos différentes )
+- Compte a rebours   / Minuteur
+- Fix sur message scrolling ( bouclage infni )
 
 # Prochaine release
 
@@ -10,12 +10,12 @@
 
 # Changelog
 
+[historique release](https://github.com/NextDom/plugin-NotifHeure/releases)
 
+### Version 1.0.1:  (**_15/01/2019_**)
 
-### Version 1.0.0:  (**_date_**)
-
-* Mise en place du plugin
-* Widget Dashboard et Mobile
+* Option choix widget ( entre widget par defaut systeme et widget NotifHeure )
+* Mise à jour des Widget Dashboard et Mobile
 
 
 ### Détail des changements

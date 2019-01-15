@@ -403,7 +403,6 @@ class NotifHeure extends eqLogic
 
  public function toHtml($_version = 'dashboard') {
 
-<<<<<<< HEAD
 
    $replace = $this->preToHtml($_version);
 if (!is_array($replace)) {
@@ -478,77 +477,6 @@ log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('Wid
     return $this->postToHtml($_version, template_replace($replace, $_templateArray[$version] ));
 
         }
-=======
-   $replace = $this->preToHtml($_version);
-		if (!is_array($replace)) {
-			return $replace;
-		}
-		$version = jeedom::versionAlias($_version);
-    if ($this->getDisplay('hideOn' . $version) == 1) {
-        return '';
-    }
-// differe
-$widgetPerso=$this->getConfiguration('widgetNotif');
- if ($widgetPerso) {
-    // ------------ Ajouter votre code ici ------------
-    $statusNotif=1;
-    $dataCmd = $this->getCmd('info', "HOR");
-    $hor=$dataCmd->execCmd();
-    $dataCmd = $this->getCmd('info', "SEC");
-    $sec=$dataCmd->execCmd();
-    if ($sec==FALSE) $statusNotif=2;
-    if ($hor==FALSE) $statusNotif=0;
-    //log::add('NotifHeure', 'debug', 'debug html from '.$this->getName().' valeur HOR : '.$hor);
-
-    foreach ($this->getCmd('info') as $cmd) {
-                $replace['#' . $cmd->getLogicalId() . '_history#'] = '';
-                $replace['#' . $cmd->getLogicalId() . '_text#'] = $cmd->execCmd()." ".$cmd->getUnite();
-                $replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
-                $replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
-                $replace['#' . $cmd->getLogicalId() . '_collect#'] = $cmd->getCollectDate();
-                if ($cmd->getLogicalId() == 'encours'){
-                    $replace['#thumbnail#'] = $cmd->getDisplay('icon');
-                }
-                if ($cmd->getIsHistorized() == 1) {
-                    $replace['#' . $cmd->getLogicalId() . '_history#'] = 'history cursor';
-                }
-            }
-    if ($this->getConfiguration('isDht') != 'Oui' ) {
-        $replace['#temp_text#'] = " --- ";
-        $replace['#hum_text#'] = " --- ";
-    }
-    if ($this->getConfiguration('isLed') != 'Oui' ) {
-        $replace['#LED#'] = "no";
-    }
-    $replace['#statusNotif#']=$statusNotif;
-    foreach ($this->getCmd('action') as $cmd) {
-                      $replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
-                  }
-    //------------ N'ajouter plus de code apres ici------------
-    return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'NotifHeure', 'NotifHeure')));
-}
-else {
-		$cmd_html = '';
-		$br_before = 0;
-		foreach ($this->getCmd(null, null, true) as $cmd) {
-			if (isset($replace['#refresh_id#']) && $cmd->getId() == $replace['#refresh_id#']) {
-				continue;
-			}
-			if ($br_before == 0 && $cmd->getDisplay('forceReturnLineBefore', 0) == 1) {
-				$cmd_html .= '<br/>';
-			}
-			$cmd_html .= $cmd->toHtml($_version, '', $replace['#cmd-background-color#']);
-			$br_before = 0;
-			if ($cmd->getDisplay('forceReturnLineAfter', 0) == 1) {
-				$cmd_html .= '<br/>';
-				$br_before = 1;
-			}
-		}
-		$replace['#cmd#'] = $cmd_html;
-		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'eqLogic')));
-  }
-}
->>>>>>> customWidget-choice
 
     /********** Getters and setters **********/
     public function sendNotif($_options = array()) {
