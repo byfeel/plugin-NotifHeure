@@ -163,6 +163,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         }
                                         ?>
 
+<<<<<<< HEAD
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -191,6 +192,36 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </div>
                                 <h4>{{Info Notif'heure}}</h4>
                                 <hr class='my-1'>
+=======
+      </div>
+    </div>
+      <div class="form-group">
+                    <label class="col-sm-4 control-label">{{Etat}}</label>
+                    <div class="col-sm-8">
+                      <!-- Case à cocher activant l'équipement -->
+                      <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
+                      <!-- Case à cocher pour rendre l'élément visible -->
+                      <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+			            <label class="col-sm-4 control-label">{{Adresse IP}}</label>
+			            <div class="col-sm-8">
+			              <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="IPnotif" placeholder="Adresse Ip du notif'heure"/>
+			            </div>
+			          </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{Widget NotifHeure}}</label>
+                  <div class="col-sm-8">
+                  <input class="form-check-input eqLogicAttr" data-l1key="configuration" data-l2key="widgetNotif" type="checkbox" checked id="checkwidget">
+                  <label for="checkwidget">{{Activer / désactiver}}</label>
+                </div>
+                </div>
+                <br/>
+
+                <h4>{{Info Notif'heure}}</h4>
+                <hr class='my-1'>
+>>>>>>> customWidget-choice
 
 
 
