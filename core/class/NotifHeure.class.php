@@ -70,7 +70,7 @@ class NotifHeure extends eqLogic
     /**************** Methods ****************/
     public function preSave() {
       //si interface std
-        $this->setDisplay("width","500px");
+        $this->setDisplay("width","400px");
     }
 
     public function preUpdate()
@@ -403,14 +403,7 @@ class NotifHeure extends eqLogic
 
  public function toHtml($_version = 'dashboard') {
 
-   $statusNotif=1;
-   $dataCmd = $this->getCmd('info', "HOR");
-   $hor=$dataCmd->execCmd();
-   $dataCmd = $this->getCmd('info', "SEC");
-   $sec=$dataCmd->execCmd();
-   if ($sec==FALSE) $statusNotif=2;
-   if ($hor==FALSE) $statusNotif=0;
-  log::add('NotifHeure', 'debug', 'debug html from '.$this->getName().' valeur HOR : '.$hor);
+
    $replace = $this->preToHtml($_version);
 if (!is_array($replace)) {
    return $replace;
@@ -419,34 +412,69 @@ $version = jeedom::versionAlias($_version);
 if ($this->getDisplay('hideOn' . $version) == 1) {
    return '';
 }
-/* ------------ Ajouter votre code ici ------------*/
-foreach ($this->getCmd('info') as $cmd) {
-            $replace['#' . $cmd->getLogicalId() . '_history#'] = '';
-            $replace['#' . $cmd->getLogicalId() . '_text#'] = $cmd->execCmd()." ".$cmd->getUnite();
-            $replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
-            $replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
-            $replace['#' . $cmd->getLogicalId() . '_collect#'] = $cmd->getCollectDate();
-            if ($cmd->getLogicalId() == 'encours'){
-                $replace['#thumbnail#'] = $cmd->getDisplay('icon');
-            }
-            if ($cmd->getIsHistorized() == 1) {
-                $replace['#' . $cmd->getLogicalId() . '_history#'] = 'history cursor';
-            }
-        }
-if ($this->getConfiguration('isDht') != 'Oui' ) {
-    $replace['#temp_text#'] = " --- ";
-    $replace['#hum_text#'] = " --- ";
-}
-if ($this->getConfiguration('isLed') != 'Oui' ) {
-    $replace['#LED#'] = "no";
-}
-$replace['#statusNotif#']=$statusNotif;
-foreach ($this->getCmd('action') as $cmd) {
-                  $replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
-              }
-/* ------------ N'ajouter plus de code apres ici------------ */
 
-return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'NotifHeure', 'NotifHeure')));
+if ($this->getConfiguration('WidgetTemplate' ) == "NotifHeure") {
+  $statusNotif=1;
+  $dataCmd = $this->getCmd('info', "HOR");
+  $hor=$dataCmd->execCmd();
+  $dataCmd = $this->getCmd('info', "SEC");
+  $sec=$dataCmd->execCmd();
+  if ($sec==FALSE) $statusNotif=2;
+  if ($hor==FALSE) $statusNotif=0;
+ //log::add('NotifHeure', 'debug', 'debug html from '.$this->getName().' valeur HOR : '.$hor);
+
+    /* ------------ Ajouter votre code ici ------------*/
+    foreach ($this->getCmd('info') as $cmd) {
+        $replace['#' . $cmd->getLogicalId() . '_history#'] = '';
+        $replace['#' . $cmd->getLogicalId() . '_text#'] = $cmd->execCmd() . " " . $cmd->getUnite();
+        $replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
+        $replace['#' . $cmd->getLogicalId() . '#'] = $cmd->execCmd();
+        $replace['#' . $cmd->getLogicalId() . '_collect#'] = $cmd->getCollectDate();
+        if ($cmd->getLogicalId() == 'encours') {
+            $replace['#thumbnail#'] = $cmd->getDisplay('icon');
+        }
+        if ($cmd->getIsHistorized() == 1) {
+            $replace['#' . $cmd->getLogicalId() . '_history#'] = 'history cursor';
+        }
+    }
+    if ($this->getConfiguration('isDht') != 'Oui') {
+        $replace['#temp_text#'] = " --- ";
+        $replace['#hum_text#'] = " --- ";
+    }
+    if ($this->getConfiguration('isLed') != 'Oui') {
+        $replace['#LED#'] = "no";
+    }
+    $replace['#statusNotif#'] = $statusNotif;
+    foreach ($this->getCmd('action') as $cmd) {
+        $replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
+    }
+    $_templateArray[$version] = getTemplate('core', $version, $this->getConfiguration('WidgetTemplate'),'NotifHeure');
+} else {
+    $replace['#eqLogic_class#'] = 'eqLogic_layout_default';
+    $cmd_html = '';
+    $br_before = 0;
+    foreach ($this->getCmd(null, null, true) as $cmd) {
+        if (isset($replace['#refresh_id#']) && $cmd->getId() == $replace['#refresh_id#']) {
+            continue;
+        }
+        if ($br_before == 0 && $cmd->getDisplay('forceReturnLineBefore', 0) == 1) {
+            $cmd_html .= '<br/>';
+        }
+        $cmd_html .= $cmd->toHtml($_version, '', $replace['#cmd-background-color#']);
+        $br_before = 0;
+        if ($cmd->getDisplay('forceReturnLineAfter', 0) == 1) {
+            $cmd_html .= '<br/>';
+            $br_before = 1;
+        }
+    }
+    $replace['#cmd#'] = $cmd_html;
+    $_templateArray[$version] = getTemplate('core', $version, 'eqLogic');
+
+}
+/* ------------ N'ajouter plus de code apres ici------------ */
+log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('WidgetTemplate' ));
+
+    return $this->postToHtml($_version, template_replace($replace, $_templateArray[$version] ));
 
         }
 
@@ -531,6 +559,7 @@ return $this->postToHtml($_version, template_replace($replace, getTemplate('core
       else $this->setConfiguration('isDht','Non');
       if ($info['system']['Photocell']) $this->setConfiguration('isphotocell','Oui');
       else $this->setConfiguration('isphotocell','Non');
+      //$this->setConfiguration('WidgetTemplate',$this->getConfiguration('WidgetTemplate'));
      $this->setConfiguration('nom',$info['system']['lieu']);
      $this->setConfiguration('ip',$info['system']['IP']);
       $this->setConfiguration('version',$info['system']['version']);

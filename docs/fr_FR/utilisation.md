@@ -35,8 +35,42 @@ Le widget est décopmosé en quatre zone , en fonction des options installés da
   * **txt** : Un mot a afficher avant les effets d’animation ( la valeur par défaut renseigner dans la page de création sera utilisé si l'option txt n'existe pas ).  
   * **pause** : Associé à INFO , permet de définir un temps d’affichage entre 0 et 60 secondes.  
   * **flash** : pour activer le flash lumineux avant notification ( si LED présente )  
-  * **fi**,**fo** ou **fio** : permet de choisir un effet pour la commande de type INFO . fi pour l’effet d’entrée , fo pour l’effet de sortie et fio pour définir le même effet en entrée et sortie. Par exemple fio=26,type=info permet un scrolling de la droite vers la gauche.  
   * **important** : Permet de rajouter un tag sur le message pour l’historisation et notification LED si présente.
+  * **fi**,**fo** ou **fio** : permet de choisir un effet pour la commande de type INFO . fi pour l’effet d’entrée , fo pour l’effet de sortie et fio pour définir le même effet en entrée et sortie. Par exemple fio=26,type=info permet un scrolling de la droite vers la gauche.  
+
+  #### Listes Codes effets (fi,fo, fio)  
+   
+|Code| Désignation        |
+|:--:|--------------------|
+|0|	Apparition / disparition par point
+|1|	Affichage sans effet
+|2|	Effet scanner horizontal
+|3|	Scrolling gauche
+|4|	Ne fait rien ( sert pour le fix )
+|5|	Apparition / disparition effet efface
+|6|	balayage verticale
+|7|	Scrolling diagonal haut-gauche
+|8|	Scrolling Haut
+|9|	Fondu
+|10|	Effet curseur ouverture
+|11|	Apparition / Disparition par le bas
+|12|	Scrolling diagonal haut-droite
+|13|	Blinds ( effet persienne )
+|14|	PAC MAN    /   PAC MAN + fantôme
+|15|	Ouverture / Fermeture
+|16|	Apparition / Disparition par le haut
+|17|	effet scanner vertical
+|18|	Scrolling diagonal bas-gauche
+|19|	curseur horizontal
+|20|	balayage horizontal
+|21|	Brouillage
+|22|	Entrelaçement
+|23|	Fermeture / Ouverture
+|24|	Effet curseur fermeture
+|25|	Scrolling diagonal haut-gauche
+|26|	Scrolling droite
+|27|	effet tranche
+|28|	Scrolling bas
 
   Vous pouvez retrouvez la documentation compléte sur mon site : https://byfeel.info
 
@@ -47,7 +81,7 @@ Le widget est décopmosé en quatre zone , en fonction des options installés da
 * Bloc 5 : Les commandes
 
   ![screenshot1](../images/commandes.png)   
-   
+
   Dans l'ordre :
   * Off : Supprime affichage de l'Horloge  
   * On(reveil) : Affiche l'horloge  
