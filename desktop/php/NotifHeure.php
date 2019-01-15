@@ -180,18 +180,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="IPnotif" placeholder="Adresse Ip du notif'heure"/>
                                     </div>
                                 </div>
-                                <h4>{{Info Notif'heure}}</h4>
-                                <hr class='my-1'>
-
                                 <div class="form-group">
-                                    <label class="col-lg-3 col-md-4 col-sm-4 col-xs-12 control-label">{{Widget}}</label>
-                                    <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+                                    <label class=" col-sm-4 control-label">{{Widget}}</label>
+                                    <div class="col-sm-8">
                                         <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="WidgetTemplate">
                                             <option value="">Widget par Défaut</option>
                                             <option value="NotifHeure">Widget spécifique</option>
                                         </select>
                                     </div>
                                 </div>
+                                <h4>{{Info Notif'heure}}</h4>
+                                <hr class='my-1'>
+
+
 
                                 <span id="IP" class="eqLogicAttr" data-l1key="configuration" data-l2key="ip" style="display:none;"></span>
                                 <div class="form-group">

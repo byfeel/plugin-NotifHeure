@@ -403,14 +403,7 @@ class NotifHeure extends eqLogic
 
  public function toHtml($_version = 'dashboard') {
 
-   $statusNotif=1;
-   $dataCmd = $this->getCmd('info', "HOR");
-   $hor=$dataCmd->execCmd();
-   $dataCmd = $this->getCmd('info', "SEC");
-   $sec=$dataCmd->execCmd();
-   if ($sec==FALSE) $statusNotif=2;
-   if ($hor==FALSE) $statusNotif=0;
-  log::add('NotifHeure', 'debug', 'debug html from '.$this->getName().' valeur HOR : '.$hor);
+
    $replace = $this->preToHtml($_version);
 if (!is_array($replace)) {
    return $replace;
@@ -420,7 +413,15 @@ if ($this->getDisplay('hideOn' . $version) == 1) {
    return '';
 }
 
-if ($this->getConfiguration('TemplateCustom' ) == "NotifHeure") {
+if ($this->getConfiguration('WidgetTemplate' ) == "NotifHeure") {
+  $statusNotif=1;
+  $dataCmd = $this->getCmd('info', "HOR");
+  $hor=$dataCmd->execCmd();
+  $dataCmd = $this->getCmd('info', "SEC");
+  $sec=$dataCmd->execCmd();
+  if ($sec==FALSE) $statusNotif=2;
+  if ($hor==FALSE) $statusNotif=0;
+ //log::add('NotifHeure', 'debug', 'debug html from '.$this->getName().' valeur HOR : '.$hor);
 
     /* ------------ Ajouter votre code ici ------------*/
     foreach ($this->getCmd('info') as $cmd) {
@@ -447,6 +448,7 @@ if ($this->getConfiguration('TemplateCustom' ) == "NotifHeure") {
     foreach ($this->getCmd('action') as $cmd) {
         $replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
     }
+    $_templateArray[$version] = getTemplate('core', $version, $this->getConfiguration('WidgetTemplate'),'NotifHeure');
 } else {
     $replace['#eqLogic_class#'] = 'eqLogic_layout_default';
     $cmd_html = '';
@@ -466,12 +468,13 @@ if ($this->getConfiguration('TemplateCustom' ) == "NotifHeure") {
         }
     }
     $replace['#cmd#'] = $cmd_html;
-
+    $_templateArray[$version] = getTemplate('core', $version, 'eqLogic');
 
 }
 /* ------------ N'ajouter plus de code apres ici------------ */
+log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('WidgetTemplate' ));
 
-     return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'eqLogic', $this->getConfiguration('WidgetTemplate' ))));
+    return $this->postToHtml($_version, template_replace($replace, $_templateArray[$version] ));
 
         }
 
@@ -556,6 +559,7 @@ if ($this->getConfiguration('TemplateCustom' ) == "NotifHeure") {
       else $this->setConfiguration('isDht','Non');
       if ($info['system']['Photocell']) $this->setConfiguration('isphotocell','Oui');
       else $this->setConfiguration('isphotocell','Non');
+      //$this->setConfiguration('WidgetTemplate',$this->getConfiguration('WidgetTemplate'));
      $this->setConfiguration('nom',$info['system']['lieu']);
      $this->setConfiguration('ip',$info['system']['IP']);
       $this->setConfiguration('version',$info['system']['version']);
