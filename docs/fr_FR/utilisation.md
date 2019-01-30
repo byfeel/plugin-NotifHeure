@@ -1,6 +1,6 @@
 # Utilisation  
 ## Le widget  
-Le widget est décopmosé en quatre zone , en fonction des options installés dans le notif'heure.  
+Le widget est décopmosé en six zones , en fonction des options installés dans le notif'heure.  
   * Bloc 1 :  
   ![screenshot1](../images/partie1.png)  
   La partie haute représente l'etat du notif'heure en fonction des commandes envoyés .  
@@ -39,7 +39,7 @@ Le widget est décopmosé en quatre zone , en fonction des options installés da
   * **fi**,**fo** ou **fio** : permet de choisir un effet pour la commande de type INFO . fi pour l’effet d’entrée , fo pour l’effet de sortie et fio pour définir le même effet en entrée et sortie. Par exemple fio=26,type=info permet un scrolling de la droite vers la gauche.  
 
   #### Listes Codes effets (fi,fo, fio)  
-   
+
 |Code| Désignation        |
 |:--:|--------------------|
 |0|	Apparition / disparition par point
@@ -90,3 +90,11 @@ Le widget est décopmosé en quatre zone , en fonction des options installés da
   * Auto : Active le mode Auto  
   * Led On : Allume la led  
   * Led Off : Eteind la led  
+
+* Bloc 6 : Le minuteur   
+![screenshot1](../images/minuteur.png)   
+  * Le - et le + pour incrementer le temps du minuteur . L'option increment dans "Paramètres optionnels sur la tuile" permet de modifier l'unité d'increment par défaut : 1  
+  * Bouton play : Pour lancer le minuteur  
+  * Bouton Stop : Pour annuler le minuteur  
+  * Bouton "magic" : Pour afficher / Masquer le minuteur
+  
