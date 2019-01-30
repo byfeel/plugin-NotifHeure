@@ -12,7 +12,7 @@ Retrouvez le sur le [Market](https://www.nextdom.org/alternativemarketforjeedom/
 # Prévisualisation
 
 
-![screenshot1](../images/widgetNotif.jpg)
+![screenshot1](../images/widgetNotif2.png)
 
 # Forum
 

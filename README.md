@@ -8,7 +8,7 @@
 
 Plugin , permettant de piloter le **notif'heure** . ( Sources du notif'heure disponible sur https://byfeel.info )
 
-  ![Widget Notif'Heure](docs/images/widgetNotif.jpg)
+  [![Widget NotifHeure](docs/images/widgetNotif2.png)]
 
 
 # Documentation du plugin:
