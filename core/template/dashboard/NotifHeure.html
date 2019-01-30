@@ -26,24 +26,42 @@
 				<button class="btn cmd center-block btn-sm btn-info" id="btn#notif_id#">Envoyer notification</button>
 			</div>
 		</div>
-		<div class="cmd noRefresh" id="#HOR_id#" data-type="info" data-subtype="binary" data-cmd_id="#HOR_id#">#HOR#</div>
-		<div class="cmd noRefresh" id="#SEC_id#" data-type="info" data-subtype="binary" data-cmd_id="#SEC_id#">#SEC#</div>
-		<div class="cmd noRefresh" id="#LED_id#" data-type="info" data-subtype="binary" data-cmd_id="#LED_id#"></div>
+		<div class="cmd noRefresh" id="#CR_id#" data-type="info" data-subtype="binary" data-cmd_id="#CR_id#" style="display:none;">#CR#</div>
+		<div class="cmd noRefresh" id="#HOR_id#" data-type="info" data-subtype="binary" data-cmd_id="#HOR_id#" style="display:none;">#HOR#</div>
+		<div class="cmd noRefresh" id="#SEC_id#" data-type="info" data-subtype="binary" data-cmd_id="#SEC_id#" style="display:none;">#SEC#</div>
+		<div class="cmd noRefresh" id="#LED_id#" data-type="info" data-subtype="binary" data-cmd_id="#LED_id#" style="display:none;"></div>
+		<div id="minuteur#id#" class="cmd" data-type="action" data-subtype="slider" data-cmd_id="#MINcmd_id#">
+			<center>
+			<hr class="my-1" />
+			  <p>Minuteur  <small>Temps ( mn )</small></p>
+			  <div class="btn-group" >
+			      <a class="btn cmd btn-default btn-sm bt_minus" style="background-color:#cmd-background-color# !important;border-color : transparent !important;"><i class="fa fa-minus"></i></a>
+			      <a class="btn cmd btn-default btn-sm bt_plus" style="background-color:#cmd-background-color# !important;border-color : transparent !important;"><i class="fa fa-plus"></i></a>
+			   <input id="tempsMin#id#" type="number" class="value form-control input-sm" value="#CRTIME#" style="width: 70px;display: inline-block; " min="1" max="600"/>
+			</div>
+			<div class="btn-group" >
+			      <a class="btn cmd btn-default btn-sm bt_play" style="background-color:#cmd-background-color# !important;border-color : transparent !important;"><i class="fa fa-play"></i></a>
+			      <a class="btn cmd btn-default btn-sm bt_stop" style="background-color:#cmd-background-color# !important;border-color : transparent !important;"><i class="fa fa-stop"></i></a>
+						<a class="btn cmd btn-default btn-sm bt_hide" data-type="action" data-subtype="other" data-cmd_id="#CRToggle_id#" style="background-color:#cmd-background-color# !important;border-color : transparent !important;"><i class="fa fa-magic"></i></a>
+			  </div>
+				</center>
+		</div>
 		<div id="infodht#id#">
 		<hr class="my-1" />
 		<p class="text-center" >Info DHT</p>
 		<div style="font-size:1.5em;">
 			<span class="divers-thermometer31 pull-left"></span>
-			<span id="temp#temp_id#" class="cmd  pull-left #temp_history# " data-type="info" data-subtype="numeric" data-cmd_id="#temp_id#" title="#temp_collect#">#temp_text#</span>
+			<span id="temp#temp_id#" class="cmd  noRefresh pull-left #temp_history# " data-type="info" data-subtype="numeric" data-cmd_id="#temp_id#" title="#temp_collect#">#temp_text#</span>
 		</div>
 
 		<div style="font-size:1.5em;">
-			<span id="hum#hum_id#" class="cmd  pull-right #hum_history#" data-type="info" data-subtype="numeric" data-cmd_id="#hum_id#" title="#hum_collect#">#hum_text#</span>
+			<span id="hum#hum_id#" class="cmd  noRefresh pull-right #hum_history#" data-type="info" data-subtype="numeric" data-cmd_id="#hum_id#" title="#hum_collect#">#hum_text#</span>
 			<span class="fa fa-tint pull-right"></span>
 		</div>
 		<div class="clearfix"></div>
-		<hr class="my-2" />
 		</div>
+		<hr class="my-1" />
+		<center>
 		<div class="btn-toolbar" role="toolbar horloge" >
   	<div class="btn-group mr-2" role="group" aria-label="Afficher / masquer horloge">
     <button type="button" class="btn cmd" data-cmd_id="#horOff_id#" title="Horloge Off" onclick="actBtn('#horOff_id#','#HOR_id#',0);	adjSn#id#();" style="background-color:#cmd-background-color#" ><span class="fa fa-power-off "  style="color:black;font-size:1.5em;"></span></button>
@@ -57,30 +75,27 @@
     <button type="button" class="btn  cmd " data-cmd_id="#lumOn_id#" title="Mode Auto" onClick="autoMode('#statusAuto#id#','#lumOn_id#');" style="background-color:#cmd-background-color#" ><span class="fas fa-adjust"  style="font-size:1.5em;"></span></button>
 	</div>
 </div>
-<center>
-	<div class="btn-group " role="group" aria-label="Auto" style="margin-top:4px;">
+
+	<div id="btnLED#id#" class="btn-group " role="group" aria-label="Auto" style="margin-top:4px;">
 	<button id="btnLedOn#id#" type="button" class="btn cmd " data-cmd_id="#ledOn_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOn_id#'});$('#statusLed#id#').css('color', 'yellow');" style="background-color:#cmd-background-color#" ><span class="far fa-lightbulb"  style="font-size:1.5em;"></span></button>
 	<button id="btnLedOff#id#" type="button" class="btn cmd " data-cmd_id="#ledOff_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOff_id#'});$('#statusLed#id#').css('color', '#444444');" style="background-color:#cmd-background-color#" ><span class="fas fa-lightbulb"  style="color:black; font-size:1.5em;"></span></button>
 </div>
 </center>
 		<script>
+
+
 			sn#id# = $('#statusNotif#id#').text();
 			am#id# = $('#statusAuto#id#').text();
 			flash#id# =true;
-			$("##HOR_id#").hide();
-			$("##SEC_id#").hide();
+			//$("##HOR_id#").hide();
+			//$("##SEC_id#").hide();
 			if ( '#LED#' !='no')  {
-					$("##LED_id#").hide();
-					if ('#LED#' == 1) {
-					//	document.getElementById('statusLed#id#').style.color = 'yellow';
-						$('#statusLed#id#').css('color', 'yellow');
-					}
-				//	else document.getElementById('statusLed#id#').style.color = '#444444';
-				else $('#statusLed#id#').css('color', '#444444');
+					if ('#LED#' == 1) $('#statusLed#id#').css('color', 'yellow');
+					else $('#statusLed#id#').css('color', '#444444');
 				}
 				else {
-					$("#btnLedOn#id#").hide();
-					$("#btnLedOff#id#").hide();
+					$("#btnLED#id#").hide();
+				//	$("#btnLedOff#id#").hide();
 				}
 			if ('#temp_text#'==" --- ") {
 				$("#infodht#id#").hide();
@@ -102,9 +117,11 @@
 			}
 
 			function adjSn#id#() {
-				sn#id# = 1;
-				if ($('##SEC_id#').html() == "0") sn#id# = 2;
+			//	sn#id# = 1;
 				if ($('##HOR_id#').html() == "0") sn#id# = 0;
+				else if ('#MINUT#'==1 && $('##CR_id#').html() == "1") sn#id# = 5;
+				else if ($('##SEC_id#').html() == "0") sn#id# = 2;
+				else sn#id# = 1;
 			//	refreshSn();
 			}
 
@@ -149,6 +166,7 @@
 			function timeNotif(idstatut,sn,flash)
 				{
 				if (sn=="0") horNotif="OFF";
+				else if (sn=="5") horNotif="Minuteur";
 				else {
 					horloge = new Date();
 					heure = horloge.getHours();
@@ -171,9 +189,44 @@
 				$(idstatut).text(horNotif);
                 return flash;
 				}
-// déclenchement fonction lors du démarrage
-
-
+// minuteur
+if ('#MINUT#'==1) {
+	var inc=parseInt('#increment#');
+	if (isNaN(inc)) inc=1;
+	var inc = Math.min(Math.max(parseInt(inc), 1), 50);
+$("#tempsMin#id#").attr('step', inc);
+$('.cmd[data-cmd_id=#MINcmd_id#] .bt_plus').on('click', function () {
+	$('.cmd[data-cmd_id=#MINcmd_id#] .value').val((parseFloat($('.cmd[data-cmd_id=#MINcmd_id#] .value').val()) + inc));
+	//$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+});
+$('.cmd[data-cmd_id=#MINcmd_id#] .bt_minus').on('click', function () {
+	$('.cmd[data-cmd_id=#MINcmd_id#] .value').val((parseFloat($('.cmd[data-cmd_id=#MINcmd_id#] .value').val()) - inc));
+	//$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+});
+$('.cmd[data-cmd_id=#MINcmd_id#] .bt_play').on('click', function () {
+//  jeedom.cmd.execute({id: '#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .value').val().replace("#unite#", "")}});
+ jeedom.cmd.execute({id: '#MINcmd_id#', value: {slider: $('.cmd[data-cmd_id=#MINcmd_id#] .value').val()}});
+ 	$("##CR_id#").html("1");
+	adjSn#id#();
+});
+$('.cmd[data-cmd_id=#MINcmd_id#] .bt_stop').on('click', function () {
+//  jeedom.cmd.execute({id: '#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .value').val().replace("#unite#", "")}});
+ jeedom.cmd.execute({id: '#MINcmd_id#', value: {slider: 0}});
+	 $('.cmd[data-cmd_id=#MINcmd_id#] .value').val(5);
+	 $("##CR_id#").html("0");
+	 adjSn#id#();
+});
+$('.cmd[data-cmd_id=#MINcmd_id#] .bt_hide').on('click', function () {
+ jeedom.cmd.execute({id: '#CRToggle_id#'});
+ if ($('##CR_id#').html() == "1")  $("##CR_id#").html("0");
+ else $("##CR_id#").html("1");
+  adjSn#id#();
+});
+}
+else {
+	console.log("version inferieur a 3.3");
+$('#minuteur#id#').hide();
+}
 
 $(function() {
 		//console.log( "ready!" );

@@ -30,7 +30,7 @@ class NotifHeure extends eqLogic
      *
      * @param null $_eqLogic_id Identifiant des objets
      */
-    public static function cron30($_eqLogic_id = null)
+    public static function cron15($_eqLogic_id = null)
     {
         // Récupère la liste des équipements
         if ($_eqLogic_id == null) {
@@ -88,6 +88,8 @@ class NotifHeure extends eqLogic
     public function postSave() {
 // création des commandes
         log::add('NotifHeure', 'debug', 'creations des commandes pour notifheure ip :'.$this->getConfiguration('IPnotif'));
+        list($M, $m) = explode(".",$this->getConfiguration('version'));
+        log::add('NotifHeure', 'debug', 'detection version notifheure - Version Majeur :'.$M.' Mineur :'.$m);
         $getDataCmd = $this->getCmd(null, 'refresh');
         if (!is_object($getDataCmd)) {
             // Création de la commande
@@ -140,6 +142,7 @@ class NotifHeure extends eqLogic
           $cmd->setType('info');
           $cmd->setSubType('binary');
           $cmd->setIsVisible(1);
+          $cmd->setOrder(1);
           $cmd->save();
       }
       $getDataCmd = $this->getCmd(null, 'horOn');
@@ -190,17 +193,6 @@ class NotifHeure extends eqLogic
           $cmd->save();
       }
     }
-      /*$getDataCmd = $this->getCmd(null, 'lumOff');
-      if (!is_object($getDataCmd)) {
-          $cmd = new NotifHeureCmd();
-          $cmd->setName(__('Luminosté Manuel', __FILE__));
-          $cmd->setLogicalId('lumOff');
-          $cmd->setEqLogic_id($this->getId());
-          $cmd->setType('action');
-          $cmd->setSubType('other');
-          $cmd->setIsVisible(1);
-          $cmd->save();
-      }*/
       $getDataCmd = $this->getCmd(null, 'LUM');
       if (!is_object($getDataCmd)) {
           $cmd = new NotifHeureCmd();
@@ -274,7 +266,46 @@ class NotifHeure extends eqLogic
           $cmd->setIsVisible(1);
           $cmd->save();
       }
-
+      // creation commande version sup a 3.3
+      if ($M>=3 && $m >=3 ) {
+      $getDataCmd = $this->getCmd(null, 'MINcmd');
+      if (!is_object($getDataCmd)) {
+          $cmd = new NotifHeureCmd();
+          $cmd->setName(__('Temps Minuteur', __FILE__));
+          $cmd->setLogicalId('MINcmd');
+          $cmd->setEqLogic_id($this->getId());
+          $cmd->setType('action');
+          $cmd->setSubType('slider');
+          $cmd->setConfiguration('minValue', 1);
+          $cmd->setConfiguration('maxValue', 600);
+          $cmd->setTemplate('dashboard','minuteur');
+          $cmd->setTemplate('mobile','minuteur');
+          $cmd->setIsVisible(1);
+          $cmd->save();
+      }
+      $getDataCmd = $this->getCmd(null, 'CRToggle');
+      if (!is_object($getDataCmd)) {
+          $cmd = new NotifHeureCmd();
+          $cmd->setName(__('Toggle Minuteur', __FILE__));
+          $cmd->setLogicalId('CRToggle');
+          $cmd->setEqLogic_id($this->getId());
+          $cmd->setType('action');
+          $cmd->setSubType('other');
+          $cmd->setIsVisible(1);
+          $cmd->save();
+      }
+      $getDataCmd = $this->getCmd(null, 'CR');
+      if (!is_object($getDataCmd)) {
+          $cmd = new NotifHeureCmd();
+          $cmd->setName(__('Etat Minuteur', __FILE__));
+          $cmd->setLogicalId('CR');
+          $cmd->setEqLogic_id($this->getId());
+          $cmd->setType('info');
+          $cmd->setSubType('binary');
+          $cmd->setIsVisible(1);
+          $cmd->save();
+      }
+    }
       if ($this->getConfiguration('isDht') == 'Oui') {
         log::add('NotifHeure', 'debug', 'configuration dht ok');
         $getDataCmd = $this->getCmd(null, 'temp');
@@ -352,8 +383,8 @@ class NotifHeure extends eqLogic
           // Sauvegarde de la commande
           $cmd->save();
         }
-      //lance la tache cron30 en fin de commande pour mise à jour
-      self::cron30($this->getId());
+      //lance la tache cron15 en fin de commande pour mise à jour
+      self::cron15($this->getId());
       //$getDataCmd = $this->getCmd(null, 'refresh');
       //$getDataCmd->execCmd();
     }
@@ -414,13 +445,27 @@ if ($this->getDisplay('hideOn' . $version) == 1) {
 }
 
 if ($this->getConfiguration('WidgetTemplate' ) == "NotifHeure") {
-  $statusNotif=1;
+
   $dataCmd = $this->getCmd('info', "HOR");
   $hor=$dataCmd->execCmd();
   $dataCmd = $this->getCmd('info', "SEC");
   $sec=$dataCmd->execCmd();
-  if ($sec==FALSE) $statusNotif=2;
+
+  $getDataCmd = $this->getCmd(null, 'MINcmd');
+  if (is_object($getDataCmd))  {
+    $minut=TRUE;
+    $dataCmd = $this->getCmd('info', "CR");
+    $CR=$dataCmd->execCmd();
+    }
+    else $minut=FALSE;
+  log::add('NotifHeure', 'debug', 'option minuteur = '.$minut);
   if ($hor==FALSE) $statusNotif=0;
+  else if ($CR==TRUE && $minut==TRUE ) $statusNotif=5;
+  else if ($sec==FALSE) $statusNotif=2;
+  else $statusNotif=1;
+  $crtime=config::byKey('crtime', 'notifheure');
+  if (intval($crtime) >0 ) $crtime =  intval($crtime);
+  else $crtime=1;
  //log::add('NotifHeure', 'debug', 'debug html from '.$this->getName().' valeur HOR : '.$hor);
 
     /* ------------ Ajouter votre code ici ------------*/
@@ -437,14 +482,24 @@ if ($this->getConfiguration('WidgetTemplate' ) == "NotifHeure") {
             $replace['#' . $cmd->getLogicalId() . '_history#'] = 'history cursor';
         }
     }
+    // Si minuteur
+    $replace['#MINUT#'] = $minut;
+    if ($minut) {
+      $replace['#CRTIME#'] = $crtime;
+      //$replace['#increment#'] = 1;
+    }
+    // si dht
     if ($this->getConfiguration('isDht') != 'Oui') {
         $replace['#temp_text#'] = " --- ";
         $replace['#hum_text#'] = " --- ";
     }
+    // si led
     if ($this->getConfiguration('isLed') != 'Oui') {
         $replace['#LED#'] = "no";
     }
+    //statut notifheure
     $replace['#statusNotif#'] = $statusNotif;
+    // affichage des commandes
     foreach ($this->getCmd('action') as $cmd) {
         $replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
     }
@@ -482,7 +537,10 @@ log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('Wid
     public function sendNotif($_options = array()) {
       //log::add('NotifHeure', 'debug', 'Message : ' . $_options['message']);
       log::add('NotifHeure', 'info', 'From '.$this->getName()." le ".date('d/m H:i')." : Message : ".$_options['message']);
-
+      $type=config::byKey('typeNotif', 'notifheure');
+      $lum=config::byKey('lumNotif', 'notifheure');
+      $pause=config::byKey('pauseNotif', 'notifheure');
+      $fio=config::byKey('fioNotif', 'notifheure');
       // options title
       $Options=preg_split("/[\,\;\.\:\-]/", str_replace(' ', '', $_options['title']));
              foreach ( $Options as $Value ){
@@ -492,8 +550,8 @@ log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('Wid
             $result[ $k ] = $v;
           }
           // Affectation des differents index
-           $type=$result["type"];
-           $lum=$result["lum"];
+          if (array_key_exists('type', $result)) $type=$result["type"];
+          if (array_key_exists('lum', $result)) $lum=$result["lum"];
            $flash=$result["flash"];
            $txt=$result["txt"];
            // si info txt absente , on récupére info notif page config
@@ -503,19 +561,20 @@ log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('Wid
            else $imp="";
            // fx , pour type info et fix
            if ( $type == "INFO") {
-               $pause=$result["pause"];
+               if (array_key_exists('pause', $result)) $pause=$result["pause"];
                $fi=$result["fi"];
                $fo=$result["fo"];
-               $fio=$result["fio"];
+               if (array_key_exists('fio', $result)) $fio=$result["fio"];
                   if (!is_numeric($fi)) $fi=8;
                   if (!is_numeric($fo)) $fo=1;
                   if (is_numeric($fio)) {
                      $fi=$fio;
                      $fo=$fio;
                    }
-        if (!is_numeric($pause)) $pause=3;
-        $argtype="&type=".$type."&pause=".$pause."&fi=".$fi."&fo=".$fo;
-        } else {
+                   if (!is_numeric($pause)) $pause=3;
+                   $argtype="&type=".$type."&pause=".$pause."&fi=".$fi."&fo=".$fo;
+          }
+        else {
         $argtype="&type=".$type;
       }
       $url = 'http://' . $this->getConfiguration('IPnotif').'/Notification?msg=' .urlencode($_options['message']).$argtype."&intnotif=".$lum."&flash=".$flash."&txt=".$txt.$imp;
@@ -528,6 +587,8 @@ log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('Wid
     public function sendOpt($opt,$val) {
       log::add('NotifHeure', 'debug', 'fonction options : comm ='.$opt.' valeur = '.$val);
 
+      if ($opt=="MIN") $val=$val*60;
+      else $this->checkAndUpdateCmd($opt,$val);
       $url = 'http://'.$this->getConfiguration('IPnotif').'/Options';
       $data = array($opt => $val);
       $options = array(
@@ -539,9 +600,9 @@ log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('Wid
       );
       $context  = stream_context_create($options);
       $result = file_get_contents($url, false, $context);
-      // ajuste l'etat option
-      $this->checkAndUpdateCmd($opt,$val);
+
       if ($opt =="INT" ) $this->checkAndUpdateCmd("LUM",FALSE);
+
       //log::add('NotifHeure', 'debug', $test);
     }
 
@@ -603,6 +664,8 @@ class NotifHeureCmd extends cmd
             $dataCmd->save();
         }
 */
+        $getRefreshCmd = $NotifEq->getCmd(null, 'refresh');
+
 
         switch ($Cmdnotif) {
           case 'notif' : $NotifEq->sendNotif($_options);
@@ -627,6 +690,15 @@ class NotifHeureCmd extends cmd
           break;
           case 'ledOff' : $NotifEq->sendOpt("LED",FALSE);
           break;
+          case 'MINcmd' : $NotifEq->sendOpt("MIN",$_options['slider']);
+                          $getRefreshCmd->execCmd();
+          break;
+          case 'CRToggle' :   $dataCmd = $NotifEq->getCmd('info', "CR");
+                              $CR=$dataCmd->execCmd();
+                              $CR=!$CR;
+                              $NotifEq->sendOpt("CR",$CR);
+                            $getRefreshCmd->execCmd();
+          break;
           case 'refresh' : //$NotifEq->toSocket();
           $info=$NotifEq->getInfo();
 
@@ -635,6 +707,7 @@ class NotifHeureCmd extends cmd
           $NotifEq->checkAndUpdateCmd('HOR',$info['Options']['HOR']);
           $NotifEq->checkAndUpdateCmd('LUM',$info['Options']['LUM']);
           $NotifEq->checkAndUpdateCmd('INT',$info['Options']['INT']);
+          $NotifEq->checkAndUpdateCmd('CR',$info['system']['CR']);
             if ($NotifEq->getConfiguration('isDht') == 'Oui') {
           log::add('NotifHeure', 'debug', 'info dht T:'.$info['dht']['T']);
           $NotifEq->checkAndUpdateCmd('temp',$info['dht']['T']);

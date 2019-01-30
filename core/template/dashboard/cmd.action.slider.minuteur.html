@@ -1,0 +1,42 @@
+<!--
+  <div style="width:auto;" class="cmd #history# tooltips cmd-widget"data-type="info" data-subtype="string" data-cmd_id="#id#" data-cmd_uid="#uid#" title="Valeur du #valueDate#, collectée le #collectDate#">
+
+  <p>minuteur</p>
+	<input type="number" class="state iconCmd#id#" value="#state#" style="color:black;width:60px;display:block;" />
+  <small>Temps en minutes</small>
+</div>
+-->
+<div class="cmd" data-type="action" data-subtype="slider" data-cmd_id="#id#" data-cmd_uid="#uid#" style="min-height:60px;" >
+<center>
+  <p>Minuteur  <small>Temps ( mn )</small></p>
+  <div class="btn-group" >
+      <a class="btn btn-default btn-sm bt_minus" style="background-color:#cmdColor# !important;border-color : transparent !important;"><i class="fa fa-minus"></i></a>
+      <a class="btn btn-default btn-sm bt_plus" style="background-color:#cmdColor# !important;border-color : transparent !important;"><i class="fa fa-plus"></i></a>
+   <input id="tempsMin#id#" type="number" class="value form-control input-sm" value="#state#" style="width: 60px;display: inline-block; " min="#minValue#" max="#maxValue#"/>
+</div>
+<div class="btn-group" >
+      <a class="btn btn-default btn-sm bt_play" style="background-color:#cmdColor# !important;border-color : transparent !important;"><i class="fa fa-play"></i></a>
+      <a class="btn btn-default btn-sm bt_stop" style="background-color:#cmdColor# !important;border-color : transparent !important;"><i class="fa fa-stop"></i></a>
+  </div>
+
+</center>
+  <script>
+        $('.cmd[data-cmd_uid=#uid#] .bt_plus').on('click', function () {
+          $('.cmd[data-cmd_uid=#uid#] .value').val((parseFloat($('.cmd[data-cmd_uid=#uid#] .value').val()) + 1));
+          //$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+      });
+      $('.cmd[data-cmd_uid=#uid#] .bt_minus').on('click', function () {
+          $('.cmd[data-cmd_uid=#uid#] .value').val((parseFloat($('.cmd[data-cmd_uid=#uid#] .value').val()) - 1));
+          //$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+      });
+      $('.cmd[data-cmd_uid=#uid#] .bt_play').on('click', function () {
+        //  jeedom.cmd.execute({id: '#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .value').val().replace("#unite#", "")}});
+         jeedom.cmd.execute({id: '#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .value').val()}});
+      });
+      $('.cmd[data-cmd_uid=#uid#] .bt_stop').on('click', function () {
+        //  jeedom.cmd.execute({id: '#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .value').val().replace("#unite#", "")}});
+         jeedom.cmd.execute({id: '#id#', value: {slider: 0}});
+           $('.cmd[data-cmd_uid=#uid#] .value').val(5);
+      });
+  </script>
+</div>
