@@ -11,19 +11,15 @@
 
 [historique release](https://github.com/NextDom/plugin-NotifHeure/releases)
 
-<<<<<<< HEAD
+### Version 1.1.2:  (**_09/03/2019_**)
+
+* fix bug - pas possible desactiver si plus sur reseau
+
 ### Version 1.1.1 (**_30/01/2019_**)  
 * minuteur  
 * Boucle infini sur scrolling ( le type=fix fonctionne aussi sur message scrolling )  
 * Option pour supprimer le point clignottant sur Horloge OFF , afin que l'ecran soit complétement eteind.
-* Mis à jour Widget 
-
-### Version 1.0.1:  
-=======
-### Version 1.1.2:  (**_09/03/2019_**)
-
-* fix bug - pas possible desactiver si plus sur reseau
->>>>>>> develop
+* Mis à jour Widget
 
 
 
