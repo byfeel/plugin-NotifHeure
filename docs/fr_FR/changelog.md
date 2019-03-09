@@ -12,10 +12,10 @@
 
 [historique release](https://github.com/NextDom/plugin-NotifHeure/releases)
 
-### Version 1.0.1:  (**_15/01/2019_**)
+### Version 1.1.2:  (**_09/03/2019_**)
 
-* Option choix widget ( entre widget par defaut systeme et widget NotifHeure )
-* Mise à jour des Widget Dashboard et Mobile
+* fix bug - pas possible desactiver si plus sur reseau
+
 
 
 ### Détail des changements
