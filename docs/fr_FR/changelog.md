@@ -11,6 +11,7 @@
 
 [historique release](https://github.com/NextDom/plugin-NotifHeure/releases)
 
+<<<<<<< HEAD
 ### Version 1.1.1 (**_30/01/2019_**)  
 * minuteur  
 * Boucle infini sur scrolling ( le type=fix fonctionne aussi sur message scrolling )  
@@ -18,9 +19,12 @@
 * Mis à jour Widget 
 
 ### Version 1.0.1:  
+=======
+### Version 1.1.2:  (**_09/03/2019_**)
 
-* Option choix widget ( entre widget par defaut systeme et widget NotifHeure )
-* Mise à jour des Widget Dashboard et Mobile
+* fix bug - pas possible desactiver si plus sur reseau
+>>>>>>> develop
+
 
 
 ### Détail des changements
