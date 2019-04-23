@@ -54,14 +54,14 @@ class NotifHeure extends eqLogic
     public static $_widgetPossibility = array ('custom' => array(
 
        'visibility' => true,
-       'displayName' => array('dashboard'=>true/false,'plan'=>true/false,'view'=>true,'mobile'=>true/false),
+       'displayName' => array('dashboard'=>true,'plan'=>true,'view'=>true,'mobile'=>true),
        //'displayName'=>true,
-       'displayObjectName' => true/false,
-       'optionalParameters' => true/false,
-       'background-color'=>true/false,
-       'text-color'=>true/false,
-       'border-radius' => true/false,
-       'border'=>true/false,
+       'displayObjectName' => true,
+       'optionalParameters' => true,
+       'background-color'=>true,
+       'text-color'=>true,
+       'border-radius' => true,
+       'border'=>true,
 
    ));
 
