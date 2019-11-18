@@ -11,6 +11,11 @@
 
 [historique release](https://github.com/NextDom/plugin-NotifHeure/releases)
 
+
+### Version 1.1.4:  (**_18/11/2019_**)
+
+* Compatibilité avec PHP7
+
 ### Version 1.1.2:  (**_09/03/2019_**)
 
 * fix bug - pas possible desactiver si plus sur reseau
