@@ -11,6 +11,7 @@
 
 [historique release](https://github.com/NextDom/plugin-NotifHeure/releases)
 
+<<<<<<< HEAD
 ### Version 1.2.0:  (**_15/03/2020_**)
 
 * Ajout de la prise en charge du NotifHeure**XL**
@@ -24,6 +25,12 @@
 ### Version 1.1.3:  (**_23/04/2019_**)
 
 * fix bug - correction bug dans fonction Core class
+=======
+
+### Version 1.1.4:  (**_18/11/2019_**)
+
+* Compatibilité avec PHP7
+>>>>>>> 17a413757d651ec882d6a131c82931e699b3c2fd
 
 ### Version 1.1.2:  (**_09/03/2019_**)
 
