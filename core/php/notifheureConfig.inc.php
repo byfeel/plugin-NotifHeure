@@ -1,0 +1,34 @@
+<?php
+// definitions des notifheures
+
+ $typeNotif['XL']=array(
+  'hardware'=>"HARDWARE",
+  'version'=>"VERSION",
+  'mac'=>"MAC",
+  'display'=>"MAXDISPLAY",
+  'signal'=>"RSSI",
+  'ip'=>"IP",
+  'isDht'=>"DHTSTATUS",
+  'isphotocell'=>"PHOTOCELL",
+  'hostname'=>"HOSTNAME",
+  'nom'=>"NOM",
+  'multizone'=>"MAXZONEMSG",
+  'isLed'=>"TYPELED",
+  'xl'=>"XL",
+  'isAudio'=>"TYPEAUDIO"
+);
+ $typeNotif['1']=array(
+  'version'=>"system,version",
+  'mac'=>"system,MAC",
+  'display'=>"system,display",
+  'signal'=>"system,RSSI",
+  'ip'=>"system,IP",
+  'isDht'=>"dht,Status",
+  'isphotocell'=>"system,Photocell",
+  'hostname'=>"system,hostname",
+  'nom'=>"system,lieu",
+  'multizone'=>"system,multizone",
+  'isLed'=>"system,LED",
+  'xl'=>"",
+  'isAudio'=>""
+);

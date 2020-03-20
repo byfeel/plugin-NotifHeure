@@ -1,6 +1,7 @@
 # Description
 
-Plugin , permettant de piloter le Notif'Heure. Pour vous installer un Notif'heure , vous pouvez vous rendre sur le site de byfeel.
+Plugin , permettant de piloter le NotifHeure.  
+Pour fabriquer un Notifheure , vous pouvez vous rendre sur le site de byfeel.
 http://byfeel.info
 
 

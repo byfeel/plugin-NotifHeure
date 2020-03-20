@@ -51,11 +51,18 @@ $v=$info['version'];
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-4 control-label">{{Temps de pause - Info - }}</label>
+            <label class="col-lg-4 control-label">{{Vitesse }}</label>
             <div class="col-lg-2">
-                <input type="number" class="configKey form-control" data-l1key="pauseNotif" value="3" min="0" max="60"/>
+                <input type="number" class="configKey form-control" data-l1key="speedNotif" value="35" min="10" max="100"/>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">{{Temps de pause - Info - }}</label>
+            <div class="col-lg-2">
+                <input type="number" class="configKey form-control" data-l1key="pauseNotif" value="3" min="0" max="180"/>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="col-lg-4 control-label">{{Effet entrée-Sortie  - Info - }}</label>
             <div class="col-lg-2">

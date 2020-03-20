@@ -31,14 +31,46 @@ Le widget est décopmosé en six zones , en fonction des options installés dans
   * **lum** : de 0 à 15 pour indiquer une valeur de luminositée  
   * **type** : Type d’animation ou de comportement BLINDS ,PAC ou OPENING : pour des effets d’animation avant la notification affiche l’info “txt” , contenu dans la variable txt.  
     * INFO : associé au champ “pause” permet d’afficher un texte court  entre 0 et 60 secondes.  
-    * FIX : Affiche un texte court , en permanence . Une nouvelle notification envoyée , enleverra le texte. Si , on désire effacer sans afficher de texte , il faut utiliser le mot clé ” **!Clear!**” dans le champ message.  
-  * **txt** : Un mot a afficher avant les effets d’animation ( la valeur par défaut renseigner dans la page de création sera utilisé si l'option txt n'existe pas ).  
+    * FIX : Affiche un texte court , en permanence . Une nouvelle notification envoyée , enleverra le texte. Pour la version notifheure standard si , on désire effacer , il faut utiliser le mot clé ” **!Clear!**” dans le champ message. Pour la version XL , il suffit d'envoyer un message avec juste un espace .
+  * **txt** : Un mot a afficher avant les effets d’animation ( la valeur par défaut renseigner dans la page de création sera utilisé si l'option txt n'existe pas ).  ( **version notifheure uniquement**)
   * **pause** : Associé à INFO , permet de définir un temps d’affichage entre 0 et 60 secondes.  
   * **flash** : pour activer le flash lumineux avant notification ( si LED présente )  
   * **important** : Permet de rajouter un tag sur le message pour l’historisation et notification LED si présente.
-  * **fi**,**fo** ou **fio** : permet de choisir un effet pour la commande de type INFO . fi pour l’effet d’entrée , fo pour l’effet de sortie et fio pour définir le même effet en entrée et sortie. Par exemple fio=26,type=info permet un scrolling de la droite vers la gauche.  
+  * **fi**,**fo** ou **fio** : permet de choisir un effet pour la commande de type INFO . fi pour l’effet d’entrée , fo pour l’effet de sortie et fio pour définir le même effet en entrée et sortie. Par exemple fio=26,type=info permet un scrolling de la droite vers la gauche.     
 
-  #### Listes Codes effets (fi,fo, fio)  
+##### Mots clef pour version XL
+
+* **nzo** : Numéro de zone sur laquelle afficher la notification
+* **anim** : Numéro animation à jouer pour la notification ( voir tableau ci-dessous)
+* **fx** : Numéro d'effet pour notification .
+
+L'option **type** est prioritaire sur les options anim et fx.
+
+#### Listes Codes Animation ( anim= xx )  NOTIFHEUREXL
+
+|Code| Désignation        |
+|:--:|--------------------|
+|0|	PAC MAN
+|1|	FLECHE 1
+|2|	ROLL 1
+|3|	MARCHEUR
+|4|	SPACE INVADER
+|5|	CHEVRON
+|6|	COEUR
+|7|	BATEAU VAPEUR
+|8|	VOILIER
+|9|	BOULE DE FEU
+|10|	ROCKET
+|11|	LIGNE
+|12|	VAGUE
+|13|	FANTOME PAC MAN
+|14|	FLECHE 2
+|15|	ROLL 2
+
+
+
+
+  #### Listes Codes effets (fi,fo, fio)  NOTIFHEURE
 
 |Code| Désignation        |
 |:--:|--------------------|
@@ -72,6 +104,39 @@ Le widget est décopmosé en six zones , en fonction des options installés dans
 |27|	effet tranche
 |28|	Scrolling bas
 
+#### Listes Codes effets (fi,fo, fio , fx )  NOTIFHEUREXL
+
+|Code| Désignation        |
+|:--:|--------------------|
+|0|	PRINT
+|1|	SCROLL LEFT
+|2|	SCROLL UP LEFT
+|3|	SCROLL DOWN LEFT
+|4|	SCROLL UP
+|5|	GROW UP
+|6|	SCAN HORIZ
+|7|	BLINDS
+|8|	WIPE
+|9|	SCAN VERTX
+|10|	SLICE
+|11|	FADE
+|12|	OPENNING CURSOR
+|15|	CLOSING
+|16|	SCAN VERT
+|17|	WIPE CURSOR
+|18|	SCAN HORIZX
+|19|	DISSOLVE
+|20|	MESH
+|21|	OPENNING
+|22|	CLOSING CURSOR
+|23|	GROW DOWN
+|24|	SCROLL DOWN
+|25|	SCROLL DOWN RIGHT
+|26|	SCROLL DOWN RIGHT
+|27|	SCROLL RIGHT
+|28|	Random
+
+
   Vous pouvez retrouvez la documentation compléte sur mon site : https://byfeel.info
 
 * Bloc 4 : Retrouvez les infos du DHT , si celui ci sont présentes dans le NotifHeure ( les infos sont réactualisés toutes les 30 minutes ).  
@@ -97,4 +162,3 @@ Le widget est décopmosé en six zones , en fonction des options installés dans
   * Bouton play : Pour lancer le minuteur  
   * Bouton Stop : Pour annuler le minuteur  
   * Bouton "magic" : Pour afficher / Masquer le minuteur
-  

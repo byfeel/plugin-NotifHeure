@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
-//require_once dirname(__FILE__) . '/../../3rdparty/websocket_client.php';
+
 
 class NotifHeure extends eqLogic
 {
@@ -236,7 +236,7 @@ public function preInsert()
           $cmd->save();
       }
       // si led présente
-      if ($this->getConfiguration('isLed') == 'Oui') {
+      if ($this->getConfiguration('isLed') != 'Non') {
       $getDataCmd = $this->getCmd(null, 'ledOn');
       if (!is_object($getDataCmd)) {
           $cmd = new NotifHeureCmd();
@@ -298,7 +298,7 @@ public function preInsert()
           $cmd->save();
       }
       // creation commande version sup a 3.3
-      if ($M>=3 && $m >=3 ) {
+      if (($M>=3 && $m >=3) || $this->getConfiguration('hardware')!="Notifheure" ) {
       $getDataCmd = $this->getCmd(null, 'MINcmd');
       if (!is_object($getDataCmd)) {
           $cmd = new NotifHeureCmd();
@@ -525,11 +525,15 @@ if ($this->getConfiguration('WidgetTemplate' ) == "NotifHeure") {
         $replace['#hum_text#'] = " --- ";
     }
     // si led
-    if ($this->getConfiguration('isLed') != 'Oui') {
+    if ($this->getConfiguration('isLed') == 'Non') {
         $replace['#LED#'] = "no";
-    }
+    } else $replace['#LED#'] = "ok";
     //statut notifheure
     $replace['#statusNotif#'] = $statusNotif;
+    //version HARDWARE
+    if ($this->getConfiguration('hardware') == "Notifheure") {
+        $replace['#hardware#'] = "std";
+    } else $replace['#hardware#'] = "xl";
     // affichage des commandes
     foreach ($this->getCmd('action') as $cmd) {
         $replace['#' . $cmd->getLogicalId() . '_id#'] = $cmd->getId();
@@ -566,12 +570,16 @@ log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('Wid
 
     /********** Getters and setters **********/
     public function sendNotif($_options = array()) {
-      //log::add('NotifHeure', 'debug', 'Message : ' . $_options['message']);
+
+      log::add('NotifHeure', 'debug', 'notifheure version : '.$_options['hardware'] );
       log::add('NotifHeure', 'info', 'From '.$this->getName()." le ".date('d/m H:i')." : Message : ".$_options['message']);
-      $type=config::byKey('typeNotif', 'notifheure');
-      $lum=config::byKey('lumNotif', 'notifheure');
-      $pause=config::byKey('pauseNotif', 'notifheure');
-      $fio=config::byKey('fioNotif', 'notifheure');
+      $type="&type=".config::byKey('typeNotif', 'notifheure');
+      $lum="&intnotif=".config::byKey('lumNotif', 'notifheure');
+      $pause="&pause=".config::byKey('pauseNotif', 'notifheure');
+      $speed="&speed=".config::byKey('speedNotif', 'notifheure');
+      $fio_config=config::byKey('fioNotif', 'notifheure');
+      $fio="&fi=".$fio_config."&fo=".$fio_config;
+      $test_type="";
       // options title
       $Options=preg_split("/[\,\;\.\:\-]/", str_replace(' ', '', $_options['title']));
              foreach ( $Options as $Value ){
@@ -581,34 +589,44 @@ log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('Wid
             $result[ $k ] = $v;
           }
           // Affectation des differents index
-          if (array_key_exists('type', $result)) $type=$result["type"];
-          if (array_key_exists('lum', $result)) $lum=$result["lum"];
-           $flash=$result["flash"];
-           $txt=$result["txt"];
+          if (array_key_exists('type', $result)) { $type="&type=".$result["type"];$test_type=$result["type"];}
+          log::add('NotifHeure', 'debug', 'debug type : '.$type );
+          if (array_key_exists('lum', $result)) $lum="&intnotif=".$result["lum"];
+          if (array_key_exists('speed', $result)) $speed="&speed=".$result["speed"];
+          if (array_key_exists('nzo', $result)) $nzo="&nzo=".$result["nzo"];
+          if (array_key_exists('anim', $result)) $anim="&anim=".$result["anim"];
+          if (array_key_exists('fx', $result)) $fx="&fx=".$result["fx"];
+           if (array_key_exists('flash', $result)) $flash="&flash=".$result["flash"];
+           if (array_key_exists('txt', $result)) $txt=$result["txt"];
            // si info txt absente , on récupére info notif page config
+           if (array_key_exists('pause', $result)) $pause="&pause=".$result["pause"];
            if (empty($txt)) $txt=$this->getConfiguration('txteffect');
+           $txt="&txt=".$txt;
            // test si tag important
            if (array_key_exists("important",$result)) $imp="&important=";
            else $imp="";
            // fx , pour type info et fix
-           if ( $type == "INFO") {
-               if (array_key_exists('pause', $result)) $pause=$result["pause"];
-               $fi=$result["fi"];
-               $fo=$result["fo"];
-               if (array_key_exists('fio', $result)) $fio=$result["fio"];
-                  if (!is_numeric($fi)) $fi=8;
+           if ( $test_type == "INFO" || $test_type =="1") {
+
+                if (array_key_exists('fio', $result)) $fio="&fi=".$result["fio"]."&fo=".$result["fio"];
+                else {
+                  if (array_key_exists('fi', $result))  $fi="&fi=".$result["fi"];
+                  if (array_key_exists('fo', $result))  $fo="&fo=".$result["fo"];
+                  $fio=$fi.$fo;
+                }
+                  /*if (!is_numeric($fi)) $fi=8;
                   if (!is_numeric($fo)) $fo=1;
                   if (is_numeric($fio)) {
                      $fi=$fio;
                      $fo=$fio;
-                   }
-                   if (!is_numeric($pause)) $pause=3;
-                   $argtype="&type=".$type."&pause=".$pause."&fi=".$fi."&fo=".$fo;
-          }
+                   }*/
+                   //if (!is_numeric($pause)) $pause=3;
+                   $argtype=$type."&pause=".$fio;
+                 }
         else {
-        $argtype="&type=".$type;
+        $argtype=$type;
       }
-      $url = 'http://' . $this->getConfiguration('IPnotif').'/Notification?msg=' .urlencode($_options['message']).$argtype."&intnotif=".$lum."&flash=".$flash."&txt=".$txt.$imp;
+      $url = 'http://' . $this->getConfiguration('IPnotif').'/Notification?msg=' .urlencode($_options['message']).$argtype.$pause.$anim.$fx.$lum.$flash.$speed.$nzo.$txt.$imp;
       // envoie requete
       $request_http = new com_http($url);
       $request_http->exec(30);
@@ -638,6 +656,7 @@ log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('Wid
     }
 
     public function getInfo() {
+
       $url = 'http://' . $this->getConfiguration('IPnotif').'/getInfo';
       $jsonotif=file_get_contents($url);
       if(!$jsonotif) throw new Exception(__('L\'adresse '.$this->getConfiguration('IPnotif').' ne semble pas joignable - Merci de verifier cette adresse.', __FILE__));
@@ -646,23 +665,96 @@ log::add('NotifHeure', 'debug', 'template choice :'.$this->getConfiguration('Wid
     }
 
     public function upConfig() {
+      // definition notifheure
+      require dirname(__FILE__) . '/../php/notifheureConfig.inc.php';
+      log::add('NotifHeure', 'debug', 'chemin : '.dirname(__FILE__) );
+    /*  $typeNotif['XL']=array(
+        'hardware'=>"HARDWARE",
+        'version'=>"VERSION",
+        'mac'=>"MAC",
+        'display'=>"MAXDISPLAY",
+        'signal'=>"RSSI",
+        'ip'=>"IP",
+        'isDht'=>"DHT_STATUS",
+        'isphotocell'=>"PHOTOCELL",
+        'hostname'=>"HOSTNAME",
+        'nom'=>"NOM",
+        'multizone'=>"MAXZONEMSG",
+        'xl'=>"XL"
+      );
+      $typeNotif['1']=array(
+        'version'=>"system,version",
+        'mac'=>"system,MAC",
+        'display'=>"system,display",
+        'signal'=>"system,RSSI",
+        'ip'=>"system,IP",
+        'isDht'=>"dht,Status",
+        'isphotocell'=>"system,Photocell",
+        'hostname'=>"system,hostname",
+        'nom'=>"system,lieu",
+        'multizone'=>"system,multizone"
+      );
+      */
       $info=self::getInfo();
-      if ($info['dht']['Status']=='OK') $this->setConfiguration('isDht',"Oui");
-      else $this->setConfiguration('isDht','Non');
-      if ($info['system']['Photocell']) $this->setConfiguration('isphotocell','Oui');
-      else $this->setConfiguration('isphotocell','Non');
-      //$this->setConfiguration('WidgetTemplate',$this->getConfiguration('WidgetTemplate'));
-     $this->setConfiguration('nom',$info['system']['lieu']);
-     $this->setConfiguration('ip',$info['system']['IP']);
-      $this->setConfiguration('version',$info['system']['version']);
-      $this->setConfiguration('signal',$info['system']['RSSI']." dBm");
-      $this->setConfiguration('mac',$info['system']['MAC']);
-      $this->setConfiguration('hostname',$info['system']['hostname']);
-      $this->setConfiguration('display',$info['system']['display']);
-      if ($info['system']['multizone']) $this->setConfiguration('multizone','Oui');
-      else $this->setConfiguration('multizone','Non');
-      if ($info['system']['LED']) $this->setConfiguration('isLed','Oui');
-      else $this->setConfiguration('isLed','Non');
+        log::add('NotifHeure', 'debug', 'hardware : '.$info['HARDWARE'] );
+      switch (strtolower($info['HARDWARE'])) {
+              case "notifheurexl" :
+                          $hard="XL";
+              break;
+              default :   $hard="1";
+               $this->setConfiguration('hardware','Notifheure');
+      }
+      $this->setConfiguration('WidgetTemplate',$this->getConfiguration('WidgetTemplate'));
+      //if ($info['dht']['Status']=='OK') $this->setConfiguration('isDht',"Oui");
+      //else $this->setConfiguration('isDht','Non');
+
+    foreach($typeNotif[$hard] as $key => $value) {
+      $vals= explode(",", $value);
+      if (count($vals)>1) $valeur=$info[$vals[0]][$vals[1]];
+      else $valeur=$info[$value];
+
+      if ($key=='isDht') {
+            if ($valeur=='OK') $valeur="Oui";
+            else $valeur="Non";
+          }
+      if ( $key=='isphotocell' ) {
+                if ( $valeur ) $valeur="Oui";
+                else $valeur="Non";
+            }
+      if ( $key=='isLed' ) {
+                      if ($valeur=="1" ) $valeur="LED INTERNE";
+                      elseif ( $valeur=="2" ) $valeur="RELAIS";
+                      elseif ( $valeur=="3" ) $valeur="LED NEOPIXEL";
+                      elseif ( $valeur=="4" ) $valeur="DIGITAL OUTPUT";
+                      elseif ($valeur) $valeur="Oui";
+                      else $valeur="Non";
+                  }
+    if ( $key=='isAudio' ) {
+                    if ( $valeur=="1" ) $valeur="BUZZER";
+                    elseif ( $valeur=="2" ) $valeur="MP3 DFPLAYER";
+                    elseif ( $valeur=="3" ) $valeur="AUTRE";
+                    elseif ( $valeur ) $valeur="Oui";
+                    else $valeur="Non";
+                }
+      if ( $key=='multizone' && $hard=="1") {
+                  if ( $valeur ) $valeur="Oui";
+                  else $valeur="Non";
+                              }
+      if ($key=='xl') {
+            if ($valeur=='true') $valeur="Actif";
+            else $valeur="Inactif";
+          }
+      $this->setConfiguration($key,$valeur);
+}
+
+      //$this->setConfiguration('signal',$info['system']['RSSI']." dBm");
+      //$this->setConfiguration('mac',$info['system']['MAC']);
+      //$this->setConfiguration('hostname',$info['system']['hostname']);
+      //$this->setConfiguration('display',$info['system']['display']);
+      //if ($info['system']['multizone']) $this->setConfiguration('multizone','Oui');
+      //else $this->setConfiguration('multizone','Non');
+    //  if ($info['system']['LED']) $this->setConfiguration('isLed','Oui');
+    //  else $this->setConfiguration('isLed','Non');
 
     }
 
@@ -732,22 +824,41 @@ class NotifHeureCmd extends cmd
           break;
           case 'refresh' : //$NotifEq->toSocket();
           $info=$NotifEq->getInfo();
-
+          if ($NotifEq->getConfiguration('hardware') == "Notifheure") {
+            //$infoOpt=$info['Options'];
             log::add('NotifHeure', 'debug', 'refresh des commandes ');
           $NotifEq->checkAndUpdateCmd('SEC',$info['Options']['SEC']);
           $NotifEq->checkAndUpdateCmd('HOR',$info['Options']['HOR']);
           $NotifEq->checkAndUpdateCmd('LUM',$info['Options']['LUM']);
           $NotifEq->checkAndUpdateCmd('INT',$info['Options']['INT']);
-          $NotifEq->checkAndUpdateCmd('CR',$info['system']['CR']);
+          $NotifEq->checkAndUpdateCmd('CR',$info['Options']['CR']);
+        }
+        else {
+          $NotifEq->checkAndUpdateCmd('SEC',$info['SEC']);
+          $NotifEq->checkAndUpdateCmd('HOR',$info['HOR']);
+          $NotifEq->checkAndUpdateCmd('LUM',$info['LUM']);
+          $NotifEq->checkAndUpdateCmd('INT',$info['INT']);
+          $NotifEq->checkAndUpdateCmd('CR',$info['CR']);
+        }
             if ($NotifEq->getConfiguration('isDht') == 'Oui') {
-          log::add('NotifHeure', 'debug', 'info dht T:'.$info['dht']['T']);
-          $NotifEq->checkAndUpdateCmd('temp',$info['dht']['T']);
-          $NotifEq->checkAndUpdateCmd('hum',$info['dht']['H']);
-          $NotifEq->checkAndUpdateCmd('hi',$info['dht']['Hi']);
-          $NotifEq->checkAndUpdateCmd('point',$info['dht']['P']);
-            }
+               if ($NotifEq->getConfiguration('hardware') == "Notifheure") {
+                        log::add('NotifHeure', 'debug', 'info version dht T:'.$info['dht']['T']);
+                        $NotifEq->checkAndUpdateCmd('temp',$info['dht']['T']);
+                        $NotifEq->checkAndUpdateCmd('hum',$info['dht']['H']);
+                        $NotifEq->checkAndUpdateCmd('hi',$info['dht']['Hi']);
+                        $NotifEq->checkAndUpdateCmd('point',$info['dht']['P']);
+                       }
+                      else {
+                         log::add('NotifHeure', 'debug', 'info version XL dht T:'.$info['TEMP']);
+                        $NotifEq->checkAndUpdateCmd('temp',$info['TEMP']);
+                        $NotifEq->checkAndUpdateCmd('hum',$info['HUM']);
+                        $NotifEq->checkAndUpdateCmd('hi',$info['Hi']);
+                        $NotifEq->checkAndUpdateCmd('point',$info['ROSE']);
+                        }
+                }
               if ($NotifEq->getConfiguration('isLed') == 'Oui') {
-          $NotifEq->checkAndUpdateCmd('LED',$info['Options']['LEDstate']);
+                if ($NotifEq->getConfiguration('hardware') == "Notifheure") $NotifEq->checkAndUpdateCmd('LED',$info['LEDstate']);
+                else $NotifEq->checkAndUpdateCmd('LED',$info['LED']);
               }
               if ($NotifEq->getConfiguration('isphotocell') == "Non") {
           $NotifEq->checkAndUpdateCmd('LUM',FALSE);

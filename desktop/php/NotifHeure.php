@@ -145,7 +145,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
                                             <option value="">{{Aucun}}</option>
                                             <?php
-                                            foreach (object::all() as $object) {
+                                            foreach (jeeObject::all() as $object) {
                                                 echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
                                             }
                                             ?>
@@ -194,6 +194,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 
                                 <span id="IP" class="eqLogicAttr" data-l1key="configuration" data-l2key="ip" style="display:none;"></span>
+                                <label class="col-sm-4 control-label">{{Type Notificateur}}</label>
+                                <div class="form-group">
+                                <div class="col-sm-3">
+                                    <span class="eqLogicAttr" data-l1key="configuration" data-l2key="hardware"></span>
+                                </div>
+                              </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">{{Version}}</label>
                                     <div class="col-sm-3">
@@ -217,7 +223,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">{{Nombre Matrice}}</label>
+                                    <label class="col-sm-4 control-label">{{Total Matrices}}</label>
                                     <div class="col-sm-3">
                                         <span class="eqLogicAttr" data-l1key="configuration" data-l2key="display"></span>
                                     </div>
@@ -238,17 +244,28 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">{{Presence LED}}</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-3">
                                         <span class="eqLogicAttr" data-l1key="configuration" data-l2key="isLed"></span>
-
+                                    </div>
+                                    <label class="col-sm-2 control-label">{{Mode XL}}</label>
+                                    <div class="col-sm-3">
+                                        <span class="eqLogicAttr" data-l1key="configuration" data-l2key="xl"></span>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">{{Presence AUDIO}}</label>
+                                    <div class="col-sm-3">
+                                        <span class="eqLogicAttr" data-l1key="configuration" data-l2key="isAudio"></span>
+                                    </div>
+                                </div>
+                                <!--
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">{{Texte avant effet}}</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="txteffect" placeholder="texte affiché avant effet ."/>
                                     </div>
                                 </div>
+                              -->
                             </fieldset>
                         </form>
                         <button  class="btn btn-info " onclick="goConfig();return false;" >{{Page configuration Notif'Heure}} <span class="eqLogicAttr" data-l1key="configuration" data-l2key="nom"></span></button>

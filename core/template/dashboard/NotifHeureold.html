@@ -1,26 +1,30 @@
+<div class="eqLogic-widget eqLogic allowResize" style="width: 260px;height: auto;border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#;#style#;" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="dashboard">
+	<span class="statusCmd" style="position : absolute;left : 5px; width : 30px;z-index: 1030;"></span>
+	<i class='fas fa-sync pull-right cursor refresh cmd' style="margin-top: 3px;margin-right: 3px;"></i>
+	<span class="cmd cmd-widget" data-cmd_id="#refresh_id#" style="display:none;"></span>
 
-<div class="eqLogic eqLogic-widget allowResize" style="height:#height#; width:#width#; text-align:left !important; background-color:#background-color#;color:#color#; #style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" data-category="#category#">
-
-	<center class="widget-name"><a href="#eqLink#" style="font-size : 1.5em;#hideEqLogicName#">#name_display#</a>
-<span class="cmd refresh pull-right cursor" data-cmd_id="#refresh#"><i class="fas fa-sync"></i></span>
-	</center>
-
+		<center class="widget-name">
+			<a href="#eqLink#" style="font-size:1.1em; #hideEqLogicName#">#name_display#<span style="font-size:0.75em; position:relative; top:-2px;">#object_name#</span></a>
+		</center>
 		<div style="padding:10px;">
 		<div class="text-center font-weight-bold" style="background-color:black;color:red;margin:0 40px;border:1px solid white;">
 			<span id="statusLed#id#" class="far fa-lightbulb" style="float:right;padding:5px 3px 0px 0px;color:#444444;font-size:10px;font-weight:bold;"> </span>
-			<span id="statusNotif#id#" style="font-size:25px;">#statusNotif#</span><br />
+			<span id="stNotif#id#" style="font-size:25px;">#statusNotif#</span><br />
 			<span id="statusAuto#id#" style="font-size:8px;color:#aaaaaa;margin-right:20px;">#LUM#</span><span id="statusInt#id#" style="font-size:10px;color:#ffffff;">#INT#</span>
 		</div>
 		<div class="text-left" style="margin:5px 15px;">Ajuster luminosité
 			<input type="range" value="#INT#" max="15" min="0" step="1" id="slider#INTcmd_id#" data-type="action" data-subtype="slider" title="Réglase intensité( Manuel )">
 		</div>
 		<div>
+
 			<label for="#notif_id#_title">Options</label>
 			<input id="#notif_id#_title" class="form-control" type="text" data-type="action" data-subtype="message" placeholder="Options Notif.">
+
+
 			<label for="#notif_id#_message">Message</label>
 			<textarea id="#notif_id#_message" class="form-control" row="3" data-type="action" data-subtype="message" placeholder="notification"></textarea>
 			<div style="margin:5px 0;">
-				<button class="btn cmd center-block btn-sm btn-info" id="btn#notif_id#">Envoyer Notification</button>
+				<button class="btn cmd center-block btn-sm btn-info" id="btn#notif_id#">Envoyer notification</button>
 			</div>
 		</div>
 		<div class="cmd noRefresh" id="#CR_id#" data-type="info" data-subtype="binary" data-cmd_id="#CR_id#" style="display:none;">#CR#</div>
@@ -29,7 +33,7 @@
 		<div class="cmd noRefresh" id="#LED_id#" data-type="info" data-subtype="binary" data-cmd_id="#LED_id#" style="display:none;"></div>
 		<div id="minuteur#id#" class="cmd" data-type="action" data-subtype="slider" data-cmd_id="#MINcmd_id#">
 			<center>
-			<hr/>
+			<hr class="my-1" />
 			  <p>Minuteur  <small>Temps ( mn )</small></p>
 			  <div class="btn-group" >
 			      <a class="btn cmd btn-default btn-sm bt_minus" style="background-color:#cmd-background-color# !important;border-color : transparent !important;"><i class="fa fa-minus"></i></a>
@@ -37,28 +41,32 @@
 			   <input id="tempsMin#id#" type="number" class="value form-control input-sm" value="#CRTIME#" style="width: 70px;display: inline-block; " min="1" max="600"/>
 			</div>
 			<div class="btn-group" >
-			      <a class="btn cmd btn-default btn-sm bt_play" style="background-color:#cmd-background-color# !important;border-color : transparent !important;" title="Start Miniteur"><i class="fa fa-play"></i></a>
-			      <a class="btn cmd btn-default btn-sm bt_stop" style="background-color:#cmd-background-color# !important;border-color : transparent !important;" title="Stop Miniteur"><i class="fa fa-stop"></i></a>
-						<a class="btn cmd btn-default btn-sm bt_hide" data-type="action" data-subtype="other" data-cmd_id="#CRToggle_id#" style="background-color:#cmd-background-color# !important;border-color : transparent !important;" title="Masquer / afficher Minuteur"><i class="fas fa-eye-slash"></i></a>
+			      <a class="btn cmd btn-default btn-sm bt_play" style="background-color:#cmd-background-color# !important;border-color : transparent !important;"><i class="fa fa-play"></i></a>
+			      <a class="btn cmd btn-default btn-sm bt_stop" style="background-color:#cmd-background-color# !important;border-color : transparent !important;"><i class="fa fa-stop"></i></a>
+						<a class="btn cmd btn-default btn-sm bt_hide" data-type="action" data-subtype="other" data-cmd_id="#CRToggle_id#" style="background-color:#cmd-background-color# !important;border-color : transparent !important;"><i class="fa fa-magic"></i></a>
 			  </div>
 				</center>
 		</div>
 		<div id="infodht#id#">
-		<hr />
+		<hr class="my-1" />
+		<p class="text-center" >Info DHT</p>
 		<div style="font-size:1.5em;">
-			<p class="text-center"><span class="divers-thermometer31 pull-left"></span><span id="temp#temp_id#" class="cmd  noRefresh pull-left #temp_history# " data-type="info" data-subtype="numeric" data-cmd_id="#temp_id#" title="#temp_collect#">#temp_text#</span>
+			<span class="divers-thermometer31 pull-left"></span>
+			<span id="temp#temp_id#" class="cmd  noRefresh pull-left #temp_history# " data-type="info" data-subtype="numeric" data-cmd_id="#temp_id#" title="#temp_collect#">#temp_text#</span>
+		</div>
+
+		<div style="font-size:1.5em;">
 			<span id="hum#hum_id#" class="cmd  noRefresh pull-right #hum_history#" data-type="info" data-subtype="numeric" data-cmd_id="#hum_id#" title="#hum_collect#">#hum_text#</span>
 			<span class="fa fa-tint pull-right"></span>
-			<span class="mx-auto" >DHT</span>
 		</div>
 		<div class="clearfix"></div>
 		</div>
 		<hr class="my-1" />
-
-			<center>
+		<center>
+		<div class="btn-toolbar" role="toolbar horloge" >
   	<div class="btn-group mr-2" role="group" aria-label="Afficher / masquer horloge">
     <button type="button" class="btn cmd" data-cmd_id="#horOff_id#" title="Horloge Off" onclick="actBtn('#horOff_id#','#HOR_id#',0);	adjSn#id#();" style="background-color:#cmd-background-color#" ><span class="fa fa-power-off "  style="color:black;font-size:1.5em;"></span></button>
-    <button type="button" class="btn cmd" data-cmd_id="#horOn_id#" title="Horloge On" onclick="actBtn('#horOn_id#','#HOR_id#',1);	adjSn#id#();" style="background-color:#cmd-background-color#" ><span class="far fa-clock"  style="font-size:1.5em;"></span></button>
+    <button type="button" class="btn cmd" data-cmd_id="#horOn_id#" title="Horloge On" onclick="actBtn('#horOn_id#','#HOR_id#',1);	adjSn#id#();" style="background-color:#cmd-background-color#" ><span class="fa fa-clock-o"  style="font-size:1.5em;"></span></button>
   </div>
   <div class="btn-group mr-2" role="group" aria-label="Affichage secondes">
     <button type="button" class="btn  cmd " data-cmd_id="#secOn_id#" title="Afficher Secondes" onclick="actBtn('#secOn_id#','#SEC_id#',1);	adjSn#id#();" style="background-color:#cmd-background-color#" ><span class="fas fa-plus-square"  style="font-size:1.5em;"></span></button>
@@ -67,17 +75,16 @@
   <div class="btn-group" role="group" aria-label="Auto">
     <button type="button" class="btn  cmd " data-cmd_id="#lumOn_id#" title="Mode Auto" onClick="autoMode('#statusAuto#id#','#lumOn_id#');" style="background-color:#cmd-background-color#" ><span class="fas fa-adjust"  style="font-size:1.5em;"></span></button>
 	</div>
-
-	<div id="btnLED#id#" class="btn-group " role="group" aria-label="Auto">
+</div>
+	<div id="btnLED#id#" class="btn-group " role="group" aria-label="Auto" style="margin-top:4px;">
 	<button id="btnLedOn#id#" type="button" class="btn cmd " data-cmd_id="#ledOn_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOn_id#'});$('#statusLed#id#').css('color', 'yellow');" style="background-color:#cmd-background-color#" ><span class="far fa-lightbulb"  style="font-size:1.5em;"></span></button>
 	<button id="btnLedOff#id#" type="button" class="btn cmd " data-cmd_id="#ledOff_id#" title="commande LED" onclick="jeedom.cmd.execute({id:'#ledOff_id#'});$('#statusLed#id#').css('color', '#444444');" style="background-color:#cmd-background-color#" ><span class="fas fa-lightbulb"  style="color:black; font-size:1.5em;"></span></button>
 </div>
 </center>
-
 		<script>
 
 
-			sn#id# = $('#statusNotif#id#').text();
+			sn#id# = $('#stNotif#id#').text();
 			am#id# = $('#statusAuto#id#').text();
 			flash#id# =true;
 			//$("##HOR_id#").hide();
@@ -99,8 +106,7 @@
 					id: '#notif_id#',
 					value: {
 						'message': $('##notif_id#_message').val(),
-						'title': $('##notif_id#_title').val(),
-						'hardware':'#hardware#'
+						'title': $('##notif_id#_title').val()
 					}
 				});
 			});
@@ -224,11 +230,11 @@ $('#minuteur#id#').hide();
 
 $(function() {
 		//console.log( "ready!" );
-		flash#id#=timeNotif('#statusNotif#id#',sn#id#,flash#id#);
+		flash#id#=timeNotif('#stNotif#id#',sn#id#,flash#id#);
 		refreshAm(am#id#,'#statusAuto#id#');
-		adjSn#id#();
+		//$("head").prepend('<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">');
 		setInterval(function(){
-			flash#id#=timeNotif('#statusNotif#id#',sn#id#,flash#id#); // toutes les secondes
+			flash#id#=timeNotif('#stNotif#id#',sn#id#,flash#id#); // toutes les secondes
 		}, 1000);
 });
 

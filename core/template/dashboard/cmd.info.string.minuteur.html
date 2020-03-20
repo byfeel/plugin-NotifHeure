@@ -1,0 +1,19 @@
+<div style="width:200px;min-height:90px;" class="cmd #history# tooltips cmd-widget" data-type="info" data-subtype="string" data-cmd_id="#id#" title="#collectDate#">    
+	<center>
+		<span id="clock#id#" style="float:left; margin-top:10px; width:200px; height:70px;"></span>
+	</center>
+	<script>
+		//var str = 'a-:09';
+      	var str = "#state#";
+      	var digits = str.split("");
+		(isNaN(digits[0]) && digits[0]!='-') ? d1='x' : d1=digits[0];
+		(isNaN(digits[1]) && digits[1]!='-') ? d2='x' : d2=digits[1];
+		(isNaN(digits[3]) && digits[3]!='-') ? d3='x' : d3=digits[3];
+		(isNaN(digits[4]) && digits[4]!='-') ? d4='x' : d4=digits[4];
+		$('#clock#id#').css("background", "url('plugins/widget/core/template/dashboard/cmd.info.string.alarm-clock/fond bose.png') no-repeat");
+		$('#clock#id#').append('<img src="plugins/widget/core/template/dashboard/cmd.info.string.alarm-clock/'+d1+'.png" style="margin-top:23px;margin-left:2px;"/>');
+		$('#clock#id#').append('<img src="plugins/widget/core/template/dashboard/cmd.info.string.alarm-clock/'+d2+'.png" style="margin-top:23px;margin-right:10px;"/>');
+		$('#clock#id#').append('<img src="plugins/widget/core/template/dashboard/cmd.info.string.alarm-clock/'+d3+'.png" style="margin-top:23px;"/>');
+		$('#clock#id#').append('<img src="plugins/widget/core/template/dashboard/cmd.info.string.alarm-clock/'+d4+'.png" style="margin-top:23px;"/>');
+	</script>
+</div>

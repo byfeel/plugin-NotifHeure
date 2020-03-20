@@ -1,15 +1,29 @@
 # Idées pour de futures releases
 
--
+- gestion du mode reveil
 
 # Prochaine release
 
-- En fonction des différentes évolutions du Notif'heure  
+- En fonction des différentes évolutions du NotifHeure  
 - Chaque nouvelle fonction , sera intégré dans le plugin
 
 # Changelog
 
 [historique release](https://github.com/NextDom/plugin-NotifHeure/releases)
+
+### Version 1.2.0:  (**_15/03/2020_**)
+
+* Ajout de la prise en charge du NotifHeure**XL**
+* Correction Affichage
+* Résolution bug 
+
+### Version 1.1.4:  (**_18/09/2019_**)
+
+* Compatibilité PHP7 .
+
+### Version 1.1.3:  (**_23/04/2019_**)
+
+* fix bug - correction bug dans fonction Core class
 
 ### Version 1.1.2:  (**_09/03/2019_**)
 

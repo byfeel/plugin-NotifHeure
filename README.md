@@ -6,7 +6,8 @@
 
 # Présentation:
 
-Plugin , permettant de piloter le **notif'heure** . ( Sources du notif'heure disponible sur https://byfeel.info )
+Plugin , permettant de piloter toues les versions du **notifHeure** ( standard et **XL** ).   
+Sources du NotifHeure disponible sur https://github.com/byfeel/Notifheure et source du Notifheure**XL** sur https://github.com/byfeel/NotifheureXL
 
   [![Widget NotifHeure](docs/images/widgetNotif2.png)]
 
